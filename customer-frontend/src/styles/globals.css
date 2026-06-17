@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+  background: white;
+  color: #111111;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+body {
+  transition:
+    background-color .3s,
+    color .3s;
+}
+
+html.dark,
+html.dark body,
+html.dark #root {
+  background-color: #0f0f0f;
+  color: white;
+  min-height: 100vh;
+}
