@@ -390,16 +390,20 @@ export default function ProductDetailsPage() {
 
           <h1
             className="
-            text-3xl
-            sm:text-4xl
-            md:text-5xl
-            xl:text-6xl
+            text-2xl
+            sm:text-3xl
+            md:text-4xl
 
-            font-black
+            font-bold
+
+            leading-tight
 
             tracking-tight
 
-            leading-none
+            text-zinc-900
+            dark:text-white
+
+            max-w-3xl
             "
           >
             {product.name}
@@ -430,13 +434,21 @@ export default function ProductDetailsPage() {
             </div>
 
             <p
-                className="
-                mt-4
+              className="
+              mt-5
 
-                text-zinc-500
-                "
+              text-base
+              md:text-lg
+
+              leading-8
+
+              text-zinc-600
+              dark:text-zinc-400
+
+              max-w-2xl
+              "
             >
-                {product.description}
+              {product.description}
             </p>
 
             <div
@@ -455,9 +467,9 @@ export default function ProductDetailsPage() {
                 <span
                 className="
                 text-3xl
-                sm:text-4xl
-                md:text-5xl
-                font-bold
+                md:text-4xl
+                font-extrabold
+                tracking-tight
                 "
                 >
                 ₹
