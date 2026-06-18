@@ -30,7 +30,7 @@ export default function ImageUploader({
     setUploading(true);
 
     try {
-      const uploadedImages = [];
+      const uploadedImages: any[] = [];
 
       for (const file of Array.from(files)) {
         const result =

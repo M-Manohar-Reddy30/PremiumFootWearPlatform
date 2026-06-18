@@ -6,10 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { productSchema } from "../../features/products/productSchema";
 
-import type {
-  ProductSchemaType,
-} from "../../features/products/productSchema";
-
 import {
   getCategories,
 } from "../../api/categoryApi";
@@ -50,10 +46,8 @@ export default function ProductForm({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ProductSchemaType>({
-    resolver: zodResolver(
-      productSchema
-    ),
+  } = useForm({
+    resolver: zodResolver(productSchema),
   });
 
   useEffect(() => {
@@ -88,10 +82,7 @@ export default function ProductForm({
 
     };
 
-  const submitHandler =
-  async (
-    data: ProductSchemaType
-  ) => {
+  const submitHandler = async (data: any) => {
 
     await onSubmit({
 
