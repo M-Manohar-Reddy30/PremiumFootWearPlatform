@@ -93,12 +93,6 @@ export default function ProductsPage() {
   const [page, setPage] =
     useState(1);
 
-  const [filterOpen, setFilterOpen] =
-  useState(false);
-
-  const [sortOpen, setSortOpen] =
-  useState(false);
-
   const [totalPages, setTotalPages] =
     useState(1);
 

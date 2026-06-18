@@ -53,7 +53,7 @@ export default function ReviewImageUploader({
 
       }
 
-      const uploaded = [];
+      const uploaded: any[] = [];
 
       for(
         const file of

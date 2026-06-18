@@ -156,9 +156,9 @@ export function CartProvider({
 
     await updateCartItem(
       productId,
+      quantity,
       size,
       color,
-      quantity,
       token
     );
 

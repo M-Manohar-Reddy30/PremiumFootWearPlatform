@@ -14,11 +14,11 @@ import MainLayout
 from "../layouts/MainLayout";
 
 import {
-  getProductBySlug,
+  getProductBySlug
 } from "../api/productApi";
 
 import {
-  useWishlist,
+  useWishlist
 } from "../providers/WishlistProvider";
 
 import RelatedProducts
@@ -34,15 +34,7 @@ import RecentlyViewed
 from "../components/products/RecentlyViewed";
 
 import {
-  useAuth,
-} from "@clerk/clerk-react";
-
-import {
-  addToWishlist,
-} from "../api/wishlistApi";
-
-import {
-  useCart,
+  useCart
 } from "../providers/CartProvider";
 
 import ShareProduct
@@ -99,13 +91,6 @@ export default function ProductDetailsPage() {
     } =
     useRecentlyViewed();
 
-  const { getToken } =
-  useAuth();
-
-  const [wishlistLoading,
-  setWishlistLoading] =
-  useState(false);
-
   const [lightboxOpen,
   setLightboxOpen] =
   useState(false);
@@ -150,56 +135,6 @@ export default function ProductDetailsPage() {
     loadProduct();
 
   },[slug]);
-
-  const handleWishlist =
-  async()=>{
-
-    try{
-
-      setWishlistLoading(true);
-
-      const token =
-      await getToken();
-
-      if(!token){
-
-        alert(
-          "Please login first"
-        );
-
-        return;
-
-      }
-
-      await addToWishlist(
-        product._id,
-        token
-      );
-
-      alert(
-        "Added To Wishlist ❤️"
-      );
-
-    }
-    catch(error:any){
-
-      alert(
-
-        error?.response?.data
-        ?.message ||
-
-        "Wishlist Failed"
-
-      );
-
-  }
-  finally{
-
-    setWishlistLoading(false);
-
-  }
-
-};
 
   if(loading){
 
