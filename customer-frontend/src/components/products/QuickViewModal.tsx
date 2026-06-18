@@ -1,6 +1,10 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
   Heart,
+  ShoppingBag,
+  Star,
 } from "lucide-react";
 
 import {
@@ -11,347 +15,677 @@ import {
   useCart,
 } from "../../providers/CartProvider";
 
-import {
-  useState,
-} from "react";
-
 export default function QuickViewModal({
   product,
   open,
   onClose,
-}:any){
+}: any) {
 
   const {
-    toggleWishlist,
     wishlistIds,
-  } =
-  useWishlist();
+    toggleWishlist,
+  } = useWishlist();
 
   const {
     addItem,
-  } =
-  useCart();
+  } = useCart();
 
-  const [size,
-  setSize] =
-  useState("");
+  const [size, setSize] =
+    useState("");
 
-  const [color,
-  setColor] =
-  useState("");
+  const [color, setColor] =
+    useState("");
 
-  if(
-    !open ||
-    !product
-  ){
+  const [selectedImage,
+  setSelectedImage] =
+    useState(0);
+
+  if (!open || !product)
     return null;
-  }
 
   const isWishlisted =
-  wishlistIds.includes(
-    product._id
-  );
+    wishlistIds.includes(
+      product._id
+    );
+
+  const discount =
+    product.discountPrice
+      ? Math.round(
+          (
+            (
+              product.price -
+              product.discountPrice
+            ) /
+            product.price
+          ) * 100
+        )
+      : 0;
 
   return (
 
-    <div
+    <AnimatePresence>
+
+      <motion.div
+
+        initial={{
+          opacity: 0,
+        }}
+
+        animate={{
+          opacity: 1,
+        }}
+
+        exit={{
+          opacity: 0,
+        }}
+
+        onClick={onClose}
+
         className="
         fixed
         inset-0
 
         z-[9999]
 
-        bg-black/60
+        bg-black/70
 
-        backdrop-blur-md
+        backdrop-blur-lg
 
         flex
         items-center
         justify-center
+
+        p-4
         "
-    >
+      >
 
-        <div
+        <motion.div
 
-            onClick={(e)=>
+          initial={{
+            opacity: 0,
+            scale: 0.9,
+            y: 50,
+          }}
+
+          animate={{
+            opacity: 1,
+            scale: 1,
+            y: 0,
+          }}
+
+          exit={{
+            opacity: 0,
+            scale: 0.9,
+          }}
+
+          transition={{
+            duration: 0.35,
+          }}
+
+          onClick={(e) =>
             e.stopPropagation()
-           }
-            className="
-            bg-white
-            dark:bg-zinc-900
+          }
 
-            rounded-3xl
+          className="
+          relative
 
-            max-w-5xl
-            w-full
+          w-full
+          max-w-6xl
 
-            overflow-hidden
+          max-h-[90vh]
 
-            relative
-            "
+          overflow-y-auto
+
+          rounded-[36px]
+
+          bg-white
+          dark:bg-zinc-950
+
+          shadow-2xl
+          "
         >
 
-        <button
+          {/* Close */}
+
+          <button
 
             onClick={onClose}
 
             className="
             absolute
-            top-4
-            right-4
-            z-20
 
-            bg-white
-            dark:bg-zinc-800
+            top-5
+            right-5
 
-            p-2
+            z-50
+
+            p-3
 
             rounded-full
 
-            shadow
-            "
-        >
-            <X size={20} />
-        </button>
+            bg-white
+            dark:bg-zinc-900
 
-        <div
-          className="
-          grid
-          md:grid-cols-2
-          "
-        >
-
-          <img
-            src={
-              product.images?.[0]?.url
-            }
-            alt=""
-            className="
-            w-full
-            h-full
-
-            object-cover
-            "
-          />
-
-          <div
-            className="
-            p-8
+            shadow-lg
             "
           >
 
-            <h2
-              className="
-              text-3xl
-              font-bold
-              "
-            >
-              {product.name}
-            </h2>
+            <X size={20} />
 
-            <p
-              className="
-              mt-4
-              text-zinc-500
-              "
-            >
-              {
-                product.description
-              }
-            </p>
+          </button>
+
+          <div
+            className="
+            grid
+
+            lg:grid-cols-2
+            "
+          >
+
+            {/* Images */}
 
             <div
               className="
-              mt-6
-              text-3xl
-              font-bold
-              "
-            >
-              ₹
-              {
-                product.discountPrice ||
-                product.price
-              }
-            </div>
-
-            {product.sizes?.length > 0 && (
-
-              <div
-                className="
-                mt-6
-                "
-              >
-
-                <h3>
-                  Size
-                </h3>
-
-                <div
-                  className="
-                  flex
-                  gap-2
-                  mt-2
-                  "
-                >
-
-                  {product.sizes.map(
-                    (item:string)=>(
-                      <button
-
-                        key={item}
-
-                        onClick={()=>
-                          setSize(item)
-                        }
-
-                        className={`
-                        px-4
-                        py-2
-                        border
-                        rounded-xl
-
-                        ${
-                          size === item
-                          ? "bg-black text-white"
-                          : ""
-                        }
-                        `}
-                      >
-                        {item}
-                      </button>
-                    )
-                  )}
-
-                </div>
-
-              </div>
-
-            )}
-
-            {product.colors?.length > 0 && (
-
-              <div
-                className="
-                mt-6
-                "
-              >
-
-                <h3>
-                  Color
-                </h3>
-
-                <div
-                  className="
-                  flex
-                  gap-2
-                  mt-2
-                  "
-                >
-
-                  {product.colors.map(
-                    (item:string)=>(
-                      <button
-
-                        key={item}
-
-                        onClick={()=>
-                          setColor(item)
-                        }
-
-                        className={`
-                        px-4
-                        py-2
-                        border
-                        rounded-xl
-
-                        ${
-                          color === item
-                          ? "bg-black text-white"
-                          : ""
-                        }
-                        `}
-                      >
-                        {item}
-                      </button>
-                    )
-                  )}
-
-                </div>
-
-              </div>
-
-            )}
-
-            <div
-              className="
-              flex
-              gap-4
-
-              mt-8
+              p-6
               "
             >
 
-              <button
-
-                onClick={()=>
-                  addItem(
-                    product._id,
-                    1,
-                    size,
-                    color
-                  )
-                }
-
+              <div
                 className="
-                flex-1
+                overflow-hidden
 
-                bg-black
-                text-white
-
-                py-4
-
-                rounded-xl
-                "
-              >
-                Add To Cart
-              </button>
-
-              <button
-
-                onClick={()=>
-                  toggleWishlist(
-                    product._id
-                  )
-                }
-
-                className="
-                border
-
-                px-5
-
-                rounded-xl
+                rounded-[28px]
                 "
               >
 
-                <Heart
-                  fill={
-                    isWishlisted
-                    ? "currentColor"
-                    : "none"
+                <img
+
+                  src={
+                    product.images?.[
+                      selectedImage
+                    ]?.url
                   }
+
+                  alt={product.name}
+
+                  className="
+                  w-full
+
+                  aspect-square
+
+                  object-cover
+                  "
                 />
 
-              </button>
+              </div>
+
+              <div
+                className="
+                flex
+
+                gap-3
+
+                mt-4
+
+                overflow-x-auto
+                "
+              >
+
+                {product.images?.map(
+                  (
+                    image: any,
+                    index: number
+                  ) => (
+
+                    <img
+
+                      key={index}
+
+                      src={image.url}
+
+                      alt=""
+
+                      onClick={() =>
+                        setSelectedImage(
+                          index
+                        )
+                      }
+
+                      className={`
+                      w-20
+                      h-20
+
+                      rounded-2xl
+
+                      object-cover
+
+                      cursor-pointer
+
+                      border-2
+
+                      ${
+                        selectedImage ===
+                        index
+                          ? "border-black"
+                          : "border-transparent"
+                      }
+                      `}
+                    />
+
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+            {/* Info */}
+
+            <div
+              className="
+              p-6
+              md:p-10
+              "
+            >
+
+              <div
+                className="
+                flex
+                items-center
+                gap-3
+
+                mb-4
+                "
+              >
+
+                {discount > 0 && (
+
+                  <span
+                    className="
+                    bg-red-500
+
+                    text-white
+
+                    px-3
+                    py-1
+
+                    rounded-full
+
+                    text-xs
+                    font-bold
+                    "
+                  >
+                    {discount}% OFF
+                  </span>
+
+                )}
+
+                {product.featured && (
+
+                  <span
+                    className="
+                    bg-black
+
+                    text-white
+
+                    px-3
+                    py-1
+
+                    rounded-full
+
+                    text-xs
+                    "
+                  >
+                    BESTSELLER
+                  </span>
+
+                )}
+
+              </div>
+
+              <h2
+                className="
+                text-4xl
+
+                font-black
+
+                leading-tight
+                "
+              >
+                {product.name}
+              </h2>
+
+              <div
+                className="
+                flex
+                items-center
+
+                gap-2
+
+                mt-4
+                "
+              >
+
+                <Star
+                  size={16}
+                  fill="currentColor"
+                  className="
+                  text-yellow-500
+                  "
+                />
+
+                <span>
+                  4.8
+                </span>
+
+                <span
+                  className="
+                  text-zinc-500
+                  "
+                >
+                  (124 Reviews)
+                </span>
+
+              </div>
+
+              <p
+                className="
+                mt-6
+
+                text-zinc-600
+                dark:text-zinc-400
+
+                leading-relaxed
+                "
+              >
+                {product.description}
+              </p>
+
+              {/* Price */}
+
+              <div
+                className="
+                flex
+                items-center
+
+                gap-4
+
+                mt-8
+                "
+              >
+
+                <span
+                  className="
+                  text-4xl
+
+                  font-black
+                  "
+                >
+                  ₹
+                  {
+                    product.discountPrice ||
+                    product.price
+                  }
+                </span>
+
+                {product.discountPrice && (
+
+                  <span
+                    className="
+                    text-xl
+
+                    line-through
+
+                    text-zinc-400
+                    "
+                  >
+                    ₹{product.price}
+                  </span>
+
+                )}
+
+              </div>
+
+              <p
+                className="
+                mt-3
+
+                text-green-600
+
+                font-medium
+                "
+              >
+                {product.stock}
+                items in stock
+              </p>
+
+              {/* Sizes */}
+
+              {product.sizes?.length > 0 && (
+
+                <div className="mt-8">
+
+                  <h3
+                    className="
+                    font-semibold
+                    mb-3
+                    "
+                  >
+                    Select Size
+                  </h3>
+
+                  <div
+                    className="
+                    flex
+                    flex-wrap
+                    gap-2
+                    "
+                  >
+
+                    {product.sizes.map(
+                      (item: string) => (
+
+                        <button
+
+                          key={item}
+
+                          onClick={() =>
+                            setSize(item)
+                          }
+
+                          className={`
+                          px-4
+                          py-2
+
+                          rounded-xl
+
+                          border
+
+                          transition
+
+                          ${
+                            size === item
+                              ? "bg-black text-white"
+                              : ""
+                          }
+                          `}
+                        >
+                          {item}
+                        </button>
+
+                      )
+                    )}
+
+                  </div>
+
+                </div>
+
+              )}
+
+              {/* Colors */}
+
+              {product.colors?.length > 0 && (
+
+                <div className="mt-8">
+
+                  <h3
+                    className="
+                    font-semibold
+                    mb-3
+                    "
+                  >
+                    Select Color
+                  </h3>
+
+                  <div
+                    className="
+                    flex
+                    flex-wrap
+                    gap-2
+                    "
+                  >
+
+                    {product.colors.map(
+                      (item: string) => (
+
+                        <button
+
+                          key={item}
+
+                          onClick={() =>
+                            setColor(item)
+                          }
+
+                          className={`
+                          px-4
+                          py-2
+
+                          rounded-xl
+
+                          border
+
+                          transition
+
+                          ${
+                            color === item
+                              ? "bg-black text-white"
+                              : ""
+                          }
+                          `}
+                        >
+                          {item}
+                        </button>
+
+                      )
+                    )}
+
+                  </div>
+
+                </div>
+
+              )}
+
+              {/* Actions */}
+
+              <div
+                className="
+                flex
+
+                gap-4
+
+                mt-10
+                "
+              >
+
+                <button
+
+                  onClick={() =>
+                    addItem(
+                      product._id,
+                      1,
+                      size,
+                      color
+                    )
+                  }
+
+                  className="
+                  flex-1
+
+                  flex
+                  items-center
+                  justify-center
+
+                  gap-2
+
+                  bg-black
+
+                  text-white
+
+                  py-4
+
+                  rounded-2xl
+
+                  font-semibold
+                  "
+                >
+
+                  <ShoppingBag
+                    size={18}
+                  />
+
+                  Add To Cart
+
+                </button>
+
+                <button
+
+                  onClick={() =>
+                    toggleWishlist(
+                      product._id
+                    )
+                  }
+
+                  className="
+                  w-16
+
+                  rounded-2xl
+
+                  border
+
+                  flex
+                  items-center
+                  justify-center
+                  "
+                >
+
+                  <Heart
+
+                    fill={
+                      isWishlisted
+                        ? "currentColor"
+                        : "none"
+                    }
+
+                    className={
+                      isWishlisted
+                        ? "text-red-500"
+                        : ""
+                    }
+                  />
+
+                </button>
+
+              </div>
 
             </div>
 
           </div>
 
-        </div>
+        </motion.div>
 
-      </div>
+      </motion.div>
 
-    </div>
+    </AnimatePresence>
 
   );
 

@@ -4,6 +4,9 @@ require("../models/User");
 const Order =
 require("../models/Order");
 
+const Product =
+require("../models/Product");
+
 const Setting =
 require("../models/Setting");
 
@@ -219,8 +222,87 @@ try{
 
  }
 
- order.orderStatus =
+ const oldStatus =
+ order.orderStatus;
+
+ const newStatus =
  req.body.orderStatus;
+
+ // Restore stock when cancelled
+
+ if(
+  oldStatus !== "cancelled" &&
+  newStatus === "cancelled"
+ ){
+
+  for(
+   const item of order.products
+  ){
+
+   const product =
+   await Product.findById(
+    item.product
+   );
+
+   if(product){
+
+    product.stock +=
+    item.quantity;
+
+    await product.save();
+
+   }
+
+  }
+
+ }
+
+ // Reduce stock again if order
+ // changes from cancelled
+
+ if(
+  oldStatus === "cancelled" &&
+  newStatus !== "cancelled"
+ ){
+
+  for(
+   const item of order.products
+  ){
+
+   const product =
+   await Product.findById(
+    item.product
+   );
+
+   if(product){
+
+    if(
+      product.stock <
+      item.quantity
+    ){
+
+      return res.status(400)
+      .json({
+        success:false,
+        message:
+        `${product.name} is out of stock`
+      });
+
+    }
+
+    product.stock -=
+    item.quantity;
+
+    await product.save();
+
+   }
+
+  }
+
+ }
+
+ order.orderStatus =
+ newStatus;
 
  await order.save();
 

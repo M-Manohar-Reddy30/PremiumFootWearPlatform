@@ -36,6 +36,16 @@ const reviewSchema =
         },
       ],
 
+      verifiedPurchase: {
+        type: Boolean,
+        default: false,
+      },
+
+      helpfulVotes: {
+        type: Number,
+        default: 0,
+      },
+
       isApproved: {
         type: Boolean,
         default: true,

@@ -85,7 +85,8 @@ export default function HeroBanner() {
     <section
       className="
       relative
-      min-h-screen
+      min-h-[80vh]
+      md:min-h-screen
       overflow-hidden
 
       bg-gradient-to-r
@@ -143,7 +144,8 @@ export default function HeroBanner() {
 
         px-6
 
-        min-h-screen
+        min-h-[80vh]
+        md:min-h-screen
 
         grid
         lg:grid-cols-2
@@ -184,7 +186,7 @@ export default function HeroBanner() {
             mb-6
             "
           >
-            Premium Collection
+            Luxury Footwear 2026
           </motion.span>
 
           <motion.h1
@@ -208,7 +210,8 @@ export default function HeroBanner() {
 
             font-black
 
-            text-5xl
+            text-4xl
+            sm:text-5xl
             md:text-7xl
             xl:text-8xl
 
@@ -289,6 +292,7 @@ export default function HeroBanner() {
               font-semibold
 
               hover:scale-105
+              hover:shadow-[0_20px_50px_rgba(255,255,255,0.25)]
 
               transition
               "
@@ -360,6 +364,67 @@ export default function HeroBanner() {
               ✓ Secure Payment
             </span>
 
+            <div
+              className="
+              grid
+              grid-cols-3
+
+              gap-3
+              md:gap-8
+
+              mt-10
+
+              max-w-lg
+              "
+            >
+
+              <div>
+                <h3 className="
+                  text-2xl
+                  md:text-3xl
+                  font-black
+                  text-white
+                  "
+                >
+                  50K+
+                </h3>
+                <p className="text-zinc-400 text-sm">
+                  Customers
+                </p>
+              </div>
+
+              <div>
+                <h3 className="
+                  text-2xl
+                  md:text-3xl
+                  font-black
+                  text-white
+                  "
+                >
+                  500+
+                </h3>
+                <p className="text-zinc-400 text-sm">
+                  Products
+                </p>
+              </div>
+
+              <div>
+                <h3 className="
+                  text-2xl
+                  md:text-3xl
+                  font-black
+                  text-white
+                  "
+                >
+                  4.9★
+                </h3>
+                <p className="text-zinc-400 text-sm">
+                  Rating
+                </p>
+              </div>
+
+            </div>
+
           </motion.div>
 
         </div>
@@ -391,6 +456,21 @@ export default function HeroBanner() {
           "
         >
 
+          <div
+            className="
+            absolute
+
+            w-[500px]
+            h-[500px]
+
+            rounded-full
+
+            bg-white/10
+
+            blur-[120px]
+            "
+          />
+
           <motion.img
 
             key={currentBanner}
@@ -404,7 +484,7 @@ export default function HeroBanner() {
             animate={{
               opacity: 1,
               x: 0,
-              y: [0, -15, 0]
+              y: [0, -25, 0]
             }}
 
             transition={{
@@ -426,7 +506,7 @@ export default function HeroBanner() {
             alt={banner.title}
 
             className="
-            max-h-[650px]
+            max-h-[760px]
             object-contain
 
             drop-shadow-[0_40px_80px_rgba(0,0,0,0.6)]

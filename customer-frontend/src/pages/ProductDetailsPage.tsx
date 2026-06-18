@@ -229,19 +229,25 @@ export default function ProductDetailsPage() {
 
     <MainLayout>
 
+      <div className="pb-24 md:pb-0">
+
       <div
         className="
-        max-w-7xl
+        max-w-[1600px]
         mx-auto
 
-        px-6
-        py-12
+        px-4
+        md:px-8
+        xl:px-12
+
+        py-8
+        md:py-16
 
         grid
+        lg:grid-cols-2
 
-        md:grid-cols-2
-
-        gap-12
+        gap-10
+        lg:gap-20
         "
       >
 
@@ -365,7 +371,9 @@ export default function ProductDetailsPage() {
 
                 object-cover
 
-                rounded-3xl
+                rounded-[32px]
+
+                shadow-2xl
 
                 cursor-zoom-in
 
@@ -407,24 +415,32 @@ export default function ProductDetailsPage() {
                     }
 
                     className={`
-                    w-20
-                    h-20
+                    w-24
+                    h-24
+
+                    md:w-28
+                    md:h-28
 
                     object-cover
 
-                    rounded-xl
+                    rounded-2xl
 
                     cursor-pointer
 
                     border-2
 
+                    transition-all
+                    duration-300
+
+                    hover:scale-105
+
                     ${
-                        selectedImage === index
-                        ? "border-black"
-                        : "border-transparent"
+                      selectedImage === index
+                      ? "border-black shadow-lg"
+                      : "border-transparent"
                     }
                     `}
-                    />
+                 />
 
                 )
                 )}
@@ -439,23 +455,44 @@ export default function ProductDetailsPage() {
 
           <h1
             className="
-            text-4xl
-            font-bold
+            text-3xl
+            sm:text-4xl
+            md:text-5xl
+            xl:text-6xl
+
+            font-black
+
+            tracking-tight
+
+            leading-none
             "
           >
             {product.name}
           </h1>
 
-          <p
-                className="
-                mt-2
-                text-zinc-500
-                "
+            <div
+              className="
+              mt-4
+              inline-flex
+
+              items-center
+
+              px-4
+              py-2
+
+              rounded-full
+
+              bg-zinc-100
+              dark:bg-zinc-800
+
+              text-sm
+              font-medium
+              "
             >
-                Category:
-                {" "}
-                {product.category?.name}
-           </p>
+              Category:
+              {" "}
+              {product.category?.name}
+            </div>
 
             <p
                 className="
@@ -467,19 +504,24 @@ export default function ProductDetailsPage() {
                 {product.description}
             </p>
 
-          <div
-                className="
-                mt-6
+            <div
+              className="
+              mt-8
 
-                flex
-                items-center
-                gap-4
-                "
+              flex
+              flex-wrap
+
+              items-center
+
+              gap-5
+              "
             >
 
                 <span
                 className="
                 text-3xl
+                sm:text-4xl
+                md:text-5xl
                 font-bold
                 "
                 >
@@ -505,6 +547,30 @@ export default function ProductDetailsPage() {
                 )}
 
             </div>
+
+            {product.discountPrice && (
+
+              <div
+                className="
+                inline-flex
+
+                mt-4
+
+                bg-green-100
+                text-green-700
+
+                px-4
+                py-2
+
+                rounded-full
+
+                font-semibold
+                "
+              >
+                Save ₹{product.price - product.discountPrice}
+              </div>
+
+            )}
 
             <p
                 className="
@@ -726,12 +792,28 @@ export default function ProductDetailsPage() {
 
                 className="
                 bg-black
+
+                hover:bg-zinc-800
+
                 text-white
 
-                px-8
+                w-full
+                sm:w-auto
+
+                px-6
+                md:px-10
+
                 py-4
 
-                rounded-xl
+                rounded-2xl
+
+                font-semibold
+
+                shadow-xl
+
+                transition-all
+
+                hover:scale-105
                 "
               >
 
@@ -752,12 +834,26 @@ export default function ProductDetailsPage() {
                 }
 
                 className="
-                border
+                border-2
 
-                px-8
+                border-black
+
+                w-full
+                sm:w-auto
+
+                px-6
+                md:px-10
+
                 py-4
 
-                rounded-xl
+                rounded-2xl
+
+                font-semibold
+
+                hover:bg-black
+                hover:text-white
+
+                transition-all
                 "
               >
 
@@ -784,7 +880,15 @@ export default function ProductDetailsPage() {
 
               space-y-4
 
-              bg-zinc-50
+              bg-gradient-to-br
+              from-zinc-50
+              to-white
+
+              dark:from-zinc-900
+              dark:to-zinc-950
+
+              shadow-xl
+              border-0
               dark:bg-zinc-900
               "
             >
@@ -943,6 +1047,86 @@ export default function ProductDetailsPage() {
           setLightboxOpen(false)
         }
       />
+
+      <ImageLightbox
+
+  images={
+    product.images
+  }
+
+  selectedIndex={
+    selectedImage
+  }
+
+  setSelectedIndex={
+    setSelectedImage
+  }
+
+  open={
+    lightboxOpen
+  }
+
+  onClose={() =>
+    setLightboxOpen(false)
+  }
+/>
+
+    {/* Mobile Sticky Cart */}
+
+    <div
+      className="
+      fixed
+      bottom-0
+      left-0
+      right-0
+
+      z-50
+
+      bg-white
+      dark:bg-zinc-950
+
+      border-t
+
+      p-4
+
+      md:hidden
+      "
+    >
+
+      <button
+
+        onClick={() => {
+
+          addItem(
+            product._id,
+            1,
+            selectedSize,
+            selectedColor
+          );
+
+        }}
+
+        className="
+        w-full
+
+        bg-black
+        text-white
+
+        py-4
+
+        rounded-xl
+
+        font-semibold
+        "
+      >
+
+        Add To Cart
+
+      </button>
+
+    </div>
+
+    </div>
 
     </MainLayout>
 

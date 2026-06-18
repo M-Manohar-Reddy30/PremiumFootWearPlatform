@@ -6,3 +6,10 @@ export const getCategoryProducts =
 api.get(
   `/products/category/${slug}`
 );
+
+export const getFilterOptions =
+()=>
+
+api.get(
+  "/products/filters/options"
+);

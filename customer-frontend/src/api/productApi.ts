@@ -32,3 +32,6 @@ export const getRecentOrders =
 api.get(
 "/orders/recent"
 );
+
+export const getFilterOptions = () =>
+  api.get("/products/filters/options");

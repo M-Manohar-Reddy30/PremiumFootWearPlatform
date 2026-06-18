@@ -1,4 +1,6 @@
 const Banner = require("../models/Banner");
+const cloudinary =
+require("../config/cloudinary");
 
 exports.createBanner = async (
   req,
@@ -94,22 +96,53 @@ exports.getActiveBanners =
   };
 
 exports.deleteBanner =
-  async (req, res) => {
-    try {
-      await Banner.findByIdAndDelete(
-        req.params.id
-      );
+async (req,res)=>{
 
-      res.status(200).json({
-        success: true,
-        message:
-          "Banner deleted successfully"
-      });
+try{
 
-    } catch (error) {
-      res.status(500).json({
-        success: false,
-        message: error.message
-      });
-    }
-  };
+const banner =
+await Banner.findById(
+req.params.id
+);
+
+if(!banner){
+
+return res.status(404).json({
+success:false,
+message:"Banner not found"
+});
+
+}
+
+if(
+banner.image &&
+banner.image.publicId
+){
+
+await cloudinary.uploader.destroy(
+banner.image.publicId
+);
+
+}
+
+await Banner.findByIdAndDelete(
+req.params.id
+);
+
+res.status(200).json({
+success:true,
+message:
+"Banner deleted successfully"
+});
+
+}
+catch(error){
+
+res.status(500).json({
+success:false,
+message:error.message
+});
+
+}
+
+};

@@ -12,6 +12,7 @@ const {
   updateProduct,
   deleteProduct,
   restoreProduct,
+  getFilterOptions,
 } = require(
   "../controllers/productController"
 );
@@ -30,6 +31,11 @@ router.get(
 router.get(
   "/category/:slug",
   getProductsByCategory
+);
+
+router.get(
+  "/filters/options",
+  getFilterOptions
 );
 
 router.get(

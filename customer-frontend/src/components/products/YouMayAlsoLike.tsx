@@ -4,6 +4,15 @@ import {
 } from "react";
 
 import {
+  motion,
+} from "framer-motion";
+
+import {
+  Sparkles,
+  ArrowRight,
+} from "lucide-react";
+
+import {
   getProducts,
 } from "../../api/productApi";
 
@@ -31,15 +40,20 @@ export default function YouMayAlsoLike({
 
       const res =
       await getProducts({
+
         trending:true,
+
         limit:8,
+
       });
 
       const filtered =
+
       res.data.products.filter(
         (product:any)=>
-        product._id !==
-        currentProductId
+
+          product._id !==
+          currentProductId
       );
 
       setProducts(
@@ -62,39 +76,204 @@ export default function YouMayAlsoLike({
 
     <section
       className="
-      mt-20
+      relative
+
+      mt-32
       "
     >
 
-      <h2
-        className="
-        text-3xl
-        font-bold
+      {/* Background Glow */}
 
-        mb-8
+      <div
+        className="
+        absolute
+
+        left-1/2
+        top-0
+
+        -translate-x-1/2
+
+        w-[600px]
+        h-[300px]
+
+        bg-zinc-300/20
+        dark:bg-zinc-700/10
+
+        blur-[140px]
+
+        pointer-events-none
+        "
+      />
+
+      {/* Header */}
+
+      <motion.div
+
+        initial={{
+          opacity:0,
+          y:30,
+        }}
+
+        whileInView={{
+          opacity:1,
+          y:0,
+        }}
+
+        viewport={{
+          once:true,
+        }}
+
+        transition={{
+          duration:0.5,
+        }}
+
+        className="
+        flex
+
+        flex-col
+        lg:flex-row
+
+        lg:items-end
+        lg:justify-between
+
+        gap-4
+
+        mb-12
         "
       >
-        You May Also Like
-      </h2>
+
+        <div>
+
+          <div
+            className="
+            inline-flex
+
+            items-center
+            gap-2
+
+            px-4
+            py-2
+
+            rounded-full
+
+            bg-zinc-100
+            dark:bg-zinc-900
+
+            text-sm
+
+            mb-4
+            "
+          >
+
+            <Sparkles
+              size={16}
+            />
+
+            AI Curated Picks
+
+          </div>
+
+          <h2
+            className="
+            text-4xl
+            md:text-5xl
+
+            font-black
+
+            tracking-tight
+            "
+          >
+            You May Also Like
+          </h2>
+
+          <p
+            className="
+            mt-3
+
+            text-zinc-500
+
+            max-w-2xl
+            "
+          >
+            Personalized recommendations selected based on trending products and customer interest.
+          </p>
+
+        </div>
+
+        <div
+          className="
+          flex
+          items-center
+          gap-2
+
+          text-zinc-500
+          "
+        >
+
+          <span>
+            {products.length}
+            {" "}
+            Recommendations
+          </span>
+
+          <ArrowRight
+            size={18}
+          />
+
+        </div>
+
+      </motion.div>
+
+      {/* Products */}
 
       <div
         className="
         grid
 
-        md:grid-cols-2
+        grid-cols-1
+        sm:grid-cols-2
         lg:grid-cols-4
 
         gap-6
+        lg:gap-8
         "
       >
 
         {products.map(
-          (product:any)=>(
+          (
+            product:any,
+            index:number
+          )=>(
 
-            <ProductCard
+            <motion.div
+
               key={product._id}
-              product={product}
-            />
+
+              initial={{
+                opacity:0,
+                y:40,
+              }}
+
+              whileInView={{
+                opacity:1,
+                y:0,
+              }}
+
+              viewport={{
+                once:true,
+              }}
+
+              transition={{
+                delay:index * 0.08,
+                duration:0.5,
+              }}
+            >
+
+              <ProductCard
+                product={product}
+              />
+
+            </motion.div>
 
           )
         )}

@@ -6,11 +6,17 @@ import {
 import {
   Search,
   X,
+  ArrowUpRight,
 } from "lucide-react";
 
 import {
   Link,
 } from "react-router-dom";
+
+import {
+  motion,
+  AnimatePresence,
+} from "framer-motion";
 
 import {
   getProducts,
@@ -19,7 +25,7 @@ import {
 export default function SearchModal({
   open,
   onClose,
-}:any){
+}: any) {
 
   const [search,
   setSearch] =
@@ -33,9 +39,16 @@ export default function SearchModal({
   setLoading] =
   useState(false);
 
-  useEffect(()=>{
+  const trending = [
+    "Running Shoes",
+    "Sneakers",
+    "Sports Shoes",
+    "Premium Collection",
+  ];
 
-    if(!search.trim()){
+  useEffect(() => {
+
+    if (!search.trim()) {
 
       setProducts([]);
 
@@ -44,62 +57,65 @@ export default function SearchModal({
     }
 
     const timeout =
-    setTimeout(async()=>{
+      setTimeout(async () => {
 
-      try{
+        try {
 
-        setLoading(true);
+          setLoading(true);
 
-        const res =
-        await getProducts({
+          const res =
+            await getProducts({
 
-          search,
+              search,
 
-          limit:8,
+              limit: 8,
 
-        });
+            });
 
-        setProducts(
-          res.data.products || []
-        );
+          setProducts(
+            res.data.products || []
+          );
 
-      }
-      catch(error){
+        }
+        catch (error) {
 
-        console.error(error);
+          console.error(error);
 
-      }
-      finally{
+        }
+        finally {
 
-        setLoading(false);
+          setLoading(false);
 
-      }
+        }
 
-    },300);
+      }, 300);
 
-    return ()=>clearTimeout(timeout);
+    return () =>
+      clearTimeout(timeout);
 
-  },[search]);
+  }, [search]);
 
-  useEffect(()=>{
+  useEffect(() => {
 
     const handleEsc =
-    (e:KeyboardEvent)=>{
+      (e: KeyboardEvent) => {
 
-      if(e.key==="Escape"){
+        if (
+          e.key === "Escape"
+        ) {
 
-        onClose();
+          onClose();
 
-      }
+        }
 
-    };
+      };
 
     window.addEventListener(
       "keydown",
       handleEsc
     );
 
-    return ()=>{
+    return () => {
 
       window.removeEventListener(
         "keydown",
@@ -108,9 +124,9 @@ export default function SearchModal({
 
     };
 
-  },[]);
+  }, []);
 
-  if(!open){
+  if (!open) {
 
     return null;
 
@@ -118,213 +134,371 @@ export default function SearchModal({
 
   return (
 
-    <div
+    <AnimatePresence>
 
-      onClick={onClose}
+      <motion.div
 
-      className="
-      fixed
-      inset-0
+        initial={{
+          opacity: 0,
+        }}
 
-      z-[9999]
+        animate={{
+          opacity: 1,
+        }}
 
-      bg-black/50
+        exit={{
+          opacity: 0,
+        }}
 
-      backdrop-blur-md
-
-      flex
-      justify-center
-
-      pt-24
-      "
-    >
-
-      <div
-
-        onClick={(e)=>
-          e.stopPropagation()
-        }
+        onClick={onClose}
 
         className="
-        bg-white
-        dark:bg-zinc-900
+        fixed
+        inset-0
 
-        w-full
-        max-w-2xl
+        z-[9999]
 
-        rounded-3xl
+        bg-black/70
 
-        h-fit
+        backdrop-blur-xl
 
-        shadow-2xl
+        flex
+        justify-center
 
-        overflow-hidden
+        px-4
+        pt-20
         "
       >
 
-        {/* Header */}
+        <motion.div
 
-        <div
+          initial={{
+            opacity: 0,
+            y: -40,
+            scale: 0.95,
+          }}
+
+          animate={{
+            opacity: 1,
+            y: 0,
+            scale: 1,
+          }}
+
+          exit={{
+            opacity: 0,
+            y: -20,
+          }}
+
+          transition={{
+            duration: 0.3,
+          }}
+
+          onClick={(e) =>
+            e.stopPropagation()
+          }
+
           className="
-          flex
-          items-center
+          w-full
+          max-w-4xl
 
-          gap-3
+          bg-white
+          dark:bg-zinc-950
 
-          p-5
+          rounded-[32px]
 
-          border-b
+          overflow-hidden
+
+          shadow-[0_25px_80px_rgba(0,0,0,0.4)]
           "
         >
 
-          <Search size={20} />
+          {/* Search Header */}
 
-          <input
-
-            autoFocus
-
-            value={search}
-
-            onChange={(e)=>
-              setSearch(
-                e.target.value
-              )
-            }
-
-            placeholder="
-            Search shoes...
-            "
-
+          <div
             className="
-            flex-1
+            flex
+            items-center
 
-            outline-none
+            gap-4
 
-            bg-transparent
+            p-6
+
+            border-b
+            border-zinc-200
+            dark:border-zinc-800
             "
-          />
-
-          <button
-            onClick={onClose}
           >
-            <X />
-          </button>
 
-        </div>
+            <Search
+              size={24}
+            />
 
-        {/* Results */}
+            <input
 
-        <div
-          className="
-          max-h-[500px]
-          overflow-y-auto
-          "
-        >
+              autoFocus
 
-          {loading && (
+              value={search}
+
+              onChange={(e) =>
+                setSearch(
+                  e.target.value
+                )
+              }
+
+              placeholder="
+Search shoes, brands, categories...
+"
+
+              className="
+              flex-1
+
+              bg-transparent
+
+              outline-none
+
+              text-lg
+              "
+            />
 
             <div
               className="
-              p-6
+              hidden
+              md:flex
+
+              text-xs
+
+              px-2
+              py-1
+
+              rounded-lg
+
+              bg-zinc-100
+              dark:bg-zinc-800
               "
             >
-              Searching...
+              ESC
             </div>
 
-          )}
+            <button
+              onClick={onClose}
+            >
+              <X />
+            </button>
 
-          {!loading &&
-          products.length === 0 &&
-          search && (
+          </div>
+
+          {/* Empty State */}
+
+          {!search && (
 
             <div
               className="
-              p-6
-
-              text-zinc-500
+              p-8
               "
             >
-              No products found
-            </div>
 
-          )}
+              <h3
+                className="
+                font-bold
+                mb-4
+                "
+              >
+                Trending Searches
+              </h3>
 
-          {products.map(
-            (product:any)=>(
-
-              <Link
-
-                key={product._id}
-
-                to={`/products/${product.slug}`}
-
-                onClick={onClose}
-
+              <div
                 className="
                 flex
-
-                gap-4
-
-                p-4
-
-                hover:bg-zinc-100
-                dark:hover:bg-zinc-800
-
-                transition
+                flex-wrap
+                gap-3
                 "
               >
 
-                <img
-                  src={
-                    product.images?.[0]
-                    ?.url
-                  }
-                  alt=""
+                {trending.map(
+                  (item) => (
+
+                    <button
+
+                      key={item}
+
+                      onClick={() =>
+                        setSearch(
+                          item
+                        )
+                      }
+
+                      className="
+                      px-4
+                      py-2
+
+                      rounded-full
+
+                      border
+
+                      hover:bg-black
+                      hover:text-white
+
+                      transition
+                      "
+                    >
+                      {item}
+                    </button>
+
+                  )
+                )}
+
+              </div>
+
+            </div>
+
+          )}
+
+          {/* Results */}
+
+          <div
+            className="
+            max-h-[70vh]
+            overflow-y-auto
+            "
+          >
+
+            {loading && (
+
+              <div
+                className="
+                p-10
+                text-center
+                "
+              >
+                Searching...
+              </div>
+
+            )}
+
+            {!loading &&
+              products.length === 0 &&
+              search && (
+
+              <div
+                className="
+                p-12
+                text-center
+                "
+              >
+
+                <Search
+                  size={48}
                   className="
-                  w-20
-                  h-20
+                  mx-auto
+                  mb-4
 
-                  object-cover
-
-                  rounded-xl
+                  text-zinc-400
                   "
                 />
 
-                <div>
+                <h3
+                  className="
+                  text-xl
+                  font-semibold
+                  "
+                >
+                  No products found
+                </h3>
 
-                  <h3
-                    className="
-                    font-semibold
-                    "
-                  >
-                    {product.name}
-                  </h3>
+              </div>
 
-                  <p
-                    className="
-                    text-zinc-500
-                    text-sm
-                    "
-                  >
-                    ₹
-                    {
-                      product.discountPrice ||
-                      product.price
+            )}
+
+            {products.map(
+              (product: any) => (
+
+                <Link
+
+                  key={product._id}
+
+                  to={`/products/${product.slug}`}
+
+                  onClick={onClose}
+
+                  className="
+                  flex
+                  items-center
+
+                  gap-5
+
+                  p-5
+
+                  hover:bg-zinc-50
+                  dark:hover:bg-zinc-900
+
+                  transition-all
+                  "
+                >
+
+                  <img
+
+                    src={
+                      product.images?.[0]
+                        ?.url
                     }
-                  </p>
 
-                </div>
+                    alt=""
 
-              </Link>
+                    className="
+                    w-24
+                    h-24
 
-            )
-          )}
+                    rounded-2xl
 
-        </div>
+                    object-cover
+                    "
+                  />
 
-      </div>
+                  <div
+                    className="
+                    flex-1
+                    "
+                  >
 
-    </div>
+                    <h3
+                      className="
+                      font-semibold
+                      text-lg
+                      "
+                    >
+                      {product.name}
+                    </h3>
+
+                    <p
+                      className="
+                      text-zinc-500
+                      "
+                    >
+                      ₹
+                      {
+                        product.discountPrice ||
+                        product.price
+                      }
+                    </p>
+
+                  </div>
+
+                  <ArrowUpRight
+                    size={18}
+                  />
+
+                </Link>
+
+              )
+            )}
+
+          </div>
+
+        </motion.div>
+
+      </motion.div>
+
+    </AnimatePresence>
 
   );
 

@@ -3,6 +3,8 @@ import {
   useState,
 } from "react";
 
+import { motion } from "framer-motion";
+
 import AddReviewForm
 from "./AddReviewForm";
 
@@ -18,27 +20,27 @@ from "./StarRating";
 
 export default function ReviewsSection({
   product,
-}:any) {
+}: any) {
 
-  const [reviews,setReviews] =
-  useState<any[]>([]);
+  const [reviews, setReviews] =
+    useState<any[]>([]);
 
   const loadReviews =
-    async()=>{
+    async () => {
 
-      try{
+      try {
 
         const res =
-        await getProductReviews(
-          product._id
-        );
+          await getProductReviews(
+            product._id
+          );
 
         setReviews(
-          res.data.data
+          res.data.data || []
         );
 
       }
-      catch(error){
+      catch (error) {
 
         console.error(error);
 
@@ -46,159 +48,349 @@ export default function ReviewsSection({
 
     };
 
-  useEffect(()=>{
+  useEffect(() => {
 
     loadReviews();
 
-  },[product._id]);
+  }, [product._id]);
 
   const averageRating =
-  reviews.length
-  ? (
-      reviews.reduce(
-        (acc,review)=>
-        acc + review.rating,
-        0
-      ) /
-      reviews.length
-    ).toFixed(1)
-  : "0";
+    reviews.length
+      ? (
+          reviews.reduce(
+            (
+              acc,
+              review
+            ) =>
+              acc +
+              review.rating,
+            0
+          ) /
+          reviews.length
+        ).toFixed(1)
+      : "0";
+
+  const ratingBreakdown =
+    [5, 4, 3, 2, 1].map(
+      (star) => {
+
+        const count =
+          reviews.filter(
+            (review) =>
+              review.rating === star
+          ).length;
+
+        const percentage =
+          reviews.length
+            ? (
+                count /
+                reviews.length
+              ) * 100
+            : 0;
+
+        return {
+          star,
+          count,
+          percentage,
+        };
+
+      }
+    );
+
+  const reviewImages =
+    reviews.flatMap(
+      (review) =>
+        review.images || []
+    );
 
   return (
 
     <section
       className="
       mt-24
+      pb-20
       "
     >
 
       <div
         className="
-        flex
-        items-center
-        gap-4
+        rounded-[32px]
 
-        mb-8
+        border
+
+        p-8
+        md:p-12
+
+        bg-white
+        dark:bg-zinc-950
+
+        shadow-xl
         "
       >
 
         <h2
           className="
-          text-3xl
-          font-bold
+          text-4xl
+          font-black
+
+          mb-10
           "
         >
-          Reviews
+          Customer Reviews
         </h2>
 
         <div
           className="
-          mb-8
+          grid
 
-          p-6
+          lg:grid-cols-2
 
-          rounded-3xl
-
-          border
-
-          bg-zinc-50
-          dark:bg-zinc-900
+          gap-12
           "
         >
 
-          <div
-            className="
-            text-5xl
-            font-bold
-            "
-          >
-            {averageRating}
+          {/* Left */}
+
+          <div>
+
+            <div
+              className="
+              text-6xl
+              font-black
+              "
+            >
+              {averageRating}
+            </div>
+
+            <div
+              className="
+              mt-3
+              "
+            >
+              <StarRating
+                rating={
+                  Math.round(
+                    Number(
+                      averageRating
+                    )
+                  )
+                }
+              />
+            </div>
+
+            <p
+              className="
+              mt-3
+
+              text-zinc-500
+              "
+            >
+              Based on
+              {" "}
+              {reviews.length}
+              {" "}
+              reviews
+            </p>
+
           </div>
 
-          <div
-            className="
-            mt-2
-            "
-          >
-            Average Rating
-          </div>
+          {/* Right */}
 
           <div
             className="
-            mt-1
-            text-zinc-500
+            space-y-4
             "
           >
-            Based on
-            {" "}
-            {reviews.length}
-            {" "}
-            Reviews
-          </div>
 
-        </div>
+            {ratingBreakdown.map(
+              (
+                item
+              ) => (
 
-        <div
-          className="
-          flex
-          items-center
-          gap-3
-          "
-        >
+                <div
+                  key={item.star}
+                  className="
+                  flex
+                  items-center
+                  gap-4
+                  "
+                >
 
-          <StarRating
-            rating={
-              Math.round(
-                Number(
-                  averageRating
-                )
+                  <span
+                    className="
+                    w-10
+                    "
+                  >
+                    {item.star}★
+                  </span>
+
+                  <div
+                    className="
+                    flex-1
+
+                    h-3
+
+                    rounded-full
+
+                    bg-zinc-200
+                    dark:bg-zinc-800
+
+                    overflow-hidden
+                    "
+                  >
+
+                    <motion.div
+
+                      initial={{
+                        width: 0,
+                      }}
+
+                      whileInView={{
+                        width:
+                          `${item.percentage}%`,
+                      }}
+
+                      viewport={{
+                        once: true,
+                      }}
+
+                      transition={{
+                        duration: 1,
+                      }}
+
+                      className="
+                      h-full
+
+                      bg-black
+                      dark:bg-white
+                      "
+                    />
+
+                  </div>
+
+                  <span
+                    className="
+                    text-sm
+
+                    text-zinc-500
+                    "
+                  >
+                    {item.count}
+                  </span>
+
+                </div>
+
               )
-            }
-          />
+            )}
 
-          <span
-            className="
-            font-semibold
-            "
-          >
-            {averageRating}
-          </span>
-
-          <span
-            className="
-            text-zinc-500
-            "
-          >
-            (
-            {reviews.length}
-            Reviews
-            )
-          </span>
+          </div>
 
         </div>
+
+        {/* Review Photos */}
+
+        {reviewImages.length > 0 && (
+
+          <div
+            className="
+            mt-12
+            "
+          >
+
+            <h3
+              className="
+              text-2xl
+              font-bold
+
+              mb-5
+              "
+            >
+              Customer Photos
+            </h3>
+
+            <div
+              className="
+              flex
+
+              gap-4
+
+              overflow-x-auto
+              "
+            >
+
+              {reviewImages.map(
+                (
+                  image:any,
+                  index:number
+                ) => (
+
+                  <img
+
+                    key={index}
+
+                    src={
+                      image.url
+                    }
+
+                    alt=""
+
+                    className="
+                    w-28
+                    h-28
+
+                    object-cover
+
+                    rounded-2xl
+
+                    border
+
+                    hover:scale-105
+
+                    transition
+                    "
+                  />
+
+                )
+              )}
+
+            </div>
+
+          </div>
+
+        )}
 
       </div>
 
-      {reviews.length === 0 ? (
+      {/* Reviews */}
 
-        <div
-          className="
-          text-zinc-500
-          "
-        >
-          No Reviews Yet
-        </div>
+      <div
+        className="
+        mt-12
 
-      ) : (
+        space-y-6
+        "
+      >
 
-        <div
-          className="
-          space-y-5
-          "
-        >
+        {reviews.length === 0 ? (
 
-          {reviews.map(
-            (review:any)=>(
+          <div
+            className="
+            text-center
+
+            py-12
+
+            text-zinc-500
+            "
+          >
+            No Reviews Yet
+          </div>
+
+        ) : (
+
+          reviews.map(
+            (
+              review:any
+            ) => (
 
               <ReviewCard
                 key={review._id}
@@ -206,23 +398,33 @@ export default function ReviewsSection({
               />
 
             )
-          )}
+          )
 
-        </div>
+        )}
 
-      )}
+      </div>
 
-      <AddReviewForm
+      {/* Review Form */}
 
-            productId={
-                product._id
-            }
+      <div
+        className="
+        mt-16
+        "
+      >
 
-            onSuccess={
-                loadReviews
-            }
+        <AddReviewForm
+
+          productId={
+            product._id
+          }
+
+          onSuccess={
+            loadReviews
+          }
 
         />
+
+      </div>
 
     </section>
 

@@ -2,6 +2,11 @@ const Category = require("../models/Category");
 const slugify = require("slugify");
 const asyncHandler = require("../utils/asyncHandler");
 const ApiResponse = require("../utils/apiResponse");
+const Product =
+require("../models/Product");
+
+const cloudinary =
+require("../config/cloudinary");
 
 exports.createCategory = asyncHandler(
   async (req, res) => {
@@ -23,15 +28,26 @@ exports.createCategory = asyncHandler(
     }
 
     const category =
-      await Category.create({
-        name,
-        slug: slugify(name, {
-          lower: true,
-          strict: true,
-        }),
-        description,
-        image,
-      });
+    await Category.create({
+
+      name,
+
+      slug: slugify(name,{
+        lower:true,
+        strict:true
+      }),
+
+      description,
+
+      image: {
+        url:
+          image?.url || "",
+
+        publicId:
+          image?.publicId || "",
+      },
+
+    });
 
     ApiResponse.success(
       res,
@@ -112,8 +128,19 @@ exports.updateCategory =
       description ??
       category.description;
 
-    category.image =
-      image ?? category.image;
+    if(image){
+
+      category.image = {
+
+        url:
+          image.url,
+
+        publicId:
+          image.publicId,
+
+      };
+
+    }
 
     await category.save();
 
@@ -125,24 +152,64 @@ exports.updateCategory =
   });
 
 exports.deleteCategory =
-  asyncHandler(async (req, res) => {
-    const category =
-      await Category.findById(
-        req.params.id
-      );
+asyncHandler(async (
+req,
+res
+)=>{
 
-    if (!category) {
-      return ApiResponse.error(
-        res,
-        "Category not found",
-        404
-      );
-    }
+const category =
+await Category.findById(
+req.params.id
+);
 
-    await category.deleteOne();
+if(!category){
 
-    ApiResponse.success(
-      res,
-      "Category deleted successfully"
-    );
-  });
+return ApiResponse.error(
+res,
+"Category not found",
+404
+);
+
+}
+
+const productCount =
+await Product.countDocuments({
+
+category:
+category._id
+
+});
+
+if(productCount > 0){
+
+return ApiResponse.error(
+res,
+"Delete products first",
+400
+);
+
+}
+
+if(
+category.image &&
+category.image.publicId
+){
+
+await cloudinary
+.uploader
+.destroy(
+category.image.publicId
+);
+
+}
+
+await Category.findByIdAndDelete(
+req.params.id
+);
+
+ApiResponse.success(
+res,
+"Category deleted successfully"
+);
+
+});

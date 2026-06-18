@@ -117,8 +117,11 @@ export default function ProfilePage() {
         max-w-5xl
         mx-auto
 
-        px-6
-        py-12
+        px-4
+        md:px-6
+
+        py-8
+        md:py-12
         "
       >
 
@@ -142,8 +145,15 @@ export default function ProfilePage() {
             <div
                 className="
                 flex
+                flex-col
+                sm:flex-row
+
                 items-center
+
                 gap-5
+
+                text-center
+                sm:text-left
                 "
             >
 
@@ -164,7 +174,8 @@ export default function ProfilePage() {
 
                     <h1
                         className="
-                        text-3xl
+                        text-2xl
+                        md:text-3xl
                         font-bold
                         "
                     >
@@ -254,7 +265,8 @@ export default function ProfilePage() {
                                 bg-zinc-100
                                 dark:bg-zinc-800
 
-                                p-5
+                                p-4
+                                md:p-5
 
                                 rounded-2xl
                                 "
@@ -270,7 +282,8 @@ export default function ProfilePage() {
 
                                 <div
                                 className="
-                                text-3xl
+                                text-2xl
+                                md:text-3xl
                                 font-bold
                                 "
                                 >
@@ -283,7 +296,8 @@ export default function ProfilePage() {
                                 bg-zinc-100
                                 dark:bg-zinc-800
 
-                                p-5
+                                p-4
+                                md:p-5
 
                                 rounded-2xl
                                 "
@@ -299,7 +313,8 @@ export default function ProfilePage() {
 
                                 <div
                                 className="
-                                text-3xl
+                                text-2xl
+                                md:text-3xl
                                 font-bold
                                 "
                                 >
@@ -312,7 +327,8 @@ export default function ProfilePage() {
                                 bg-zinc-100
                                 dark:bg-zinc-800
 
-                                p-5
+                                p-4
+                                md:p-5
 
                                 rounded-2xl
                                 "
@@ -344,7 +360,8 @@ export default function ProfilePage() {
                                 bg-zinc-100
                                 dark:bg-zinc-800
 
-                                p-5
+                                p-4
+                                md:p-5
 
                                 rounded-2xl
                                 "

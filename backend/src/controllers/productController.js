@@ -1,6 +1,9 @@
 const Product = require("../models/Product");
 const Category = require("../models/Category");
 const slugify = require("slugify");
+const cloudinary = require("../config/cloudinary");
+const Review =
+require("../models/Review");
 
 const createProduct = async (req, res) => {
   try {
@@ -14,12 +17,21 @@ const createProduct = async (req, res) => {
       price,
       discountPrice,
       category,
+
+      brand,
+      gender,
+      material,
+      occasion,
+
       sizes,
       colors,
+
       stock,
+
       featured,
       trending,
       newArrival,
+
       images,
     } = req.body;
 
@@ -49,10 +61,19 @@ const createProduct = async (req, res) => {
         description,
         price,
         discountPrice,
+
         category,
+
+        brand,
+        gender,
+        material,
+        occasion,
+
         sizes,
         colors,
+
         stock,
+
         featured,
         trending,
         newArrival,
@@ -95,12 +116,21 @@ const getProducts = async (req, res) => {
     const {
       search,
       category,
+
+      brand,
+      gender,
+      material,
+      occasion,
+
       featured,
       trending,
       newArrival,
+
       sort,
+
       size,
       color,
+
       minPrice,
       maxPrice,
     } = req.query;
@@ -128,6 +158,22 @@ const getProducts = async (req, res) => {
 
     if (category) {
       query.category = category;
+    }
+
+    if (brand) {
+      query.brand = brand;
+    }
+
+    if (gender) {
+      query.gender = gender;
+    }
+
+    if (material) {
+      query.material = material;
+    }
+
+    if (occasion) {
+      query.occasion = occasion;
     }
 
     if (size) {
@@ -356,35 +402,134 @@ const deleteProduct = async (
   req,
   res
 ) => {
+
   try {
+
     const product =
       await Product.findById(
         req.params.id
       );
 
     if (!product) {
+
       return res.status(404).json({
         success: false,
         message: "Product not found",
       });
+
     }
 
-    product.isActive = false;
+    // Delete images from Cloudinary
 
-    await product.save();
+    if (
+      product.images &&
+      product.images.length > 0
+    ) {
+
+      for (const image of product.images) {
+
+        if (image.publicId) {
+
+          await cloudinary.uploader.destroy(
+            image.publicId
+          );
+
+        }
+
+      }
+
+    }
+
+    // Find reviews for product
+
+    const reviews =
+    await Review.find({
+
+      product:
+      product._id
+
+    });
+
+    // Delete review images
+
+    for(const review of reviews){
+
+      if(
+        review.images &&
+        review.images.length > 0
+      ){
+
+        for(
+          const image
+          of review.images
+        ){
+
+          if(image.publicId){
+
+            await cloudinary
+            .uploader
+            .destroy(
+              image.publicId
+            );
+
+          }
+
+        }
+
+      }
+
+    }
+
+    // Delete reviews
+
+    await Review.deleteMany({
+
+      product:
+      product._id
+
+    });
+
+    // Delete product
+
+    await Product.findByIdAndDelete(
+      req.params.id
+    );
+
+    // Delete product from MongoDB
+
+    await Product.findByIdAndDelete(
+      req.params.id
+    );
 
     res.status(200).json({
+
       success: true,
+
       message:
-        "Product archived successfully",
+        "Product permanently deleted",
+
     });
 
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: error.message,
-    });
   }
+
+  catch (error) {
+
+    console.error(
+      "DELETE PRODUCT ERROR"
+    );
+
+    console.error(error);
+
+    res.status(500).json({
+
+      success: false,
+
+      message: error.message,
+
+    });
+
+  }
+
 };
 
 const restoreProduct = async (
@@ -477,6 +622,79 @@ message:error.message
 
 };
 
+const getFilterOptions = async (
+  req,
+  res
+) => {
+
+  try {
+
+    const brands =
+      await Product.distinct(
+        "brand",
+        { isActive: true }
+      );
+
+    const genders =
+      await Product.distinct(
+        "gender",
+        { isActive: true }
+      );
+
+    const materials =
+      await Product.distinct(
+        "material",
+        { isActive: true }
+      );
+
+    const occasions =
+      await Product.distinct(
+        "occasion",
+        { isActive: true }
+      );
+
+    const sizes =
+    (
+      await Product.distinct(
+      "sizes",
+      { isActive:true }
+      )
+    ).filter(Boolean);
+
+    const colors =
+    (
+      await Product.distinct(
+      "colors",
+      { isActive:true }
+      )
+    ).filter(Boolean);
+
+    res.json({
+
+      success:true,
+
+      brands,
+      genders,
+      materials,
+      occasions,
+      sizes,
+      colors,
+
+    });
+
+  }
+
+  catch(error){
+
+    res.status(500).json({
+      success:false,
+      message:error.message,
+    });
+
+  }
+
+};
+
 module.exports = {
   createProduct,
   getProducts,
@@ -487,4 +705,5 @@ module.exports = {
   updateProduct,
   deleteProduct,
   restoreProduct,
+  getFilterOptions,
 };

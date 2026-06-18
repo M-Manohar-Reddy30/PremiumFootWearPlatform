@@ -5,12 +5,25 @@ import {
   useState,
 } from "react";
 
+import {
+  motion,
+} from "framer-motion";
+
+import {
+  CheckCircle2,
+  ThumbsUp,
+} from "lucide-react";
+
 import ReviewImageLightbox
 from "./ReviewImageLightbox";
 
+import {
+  markReviewHelpful,
+} from "../../api/reviewApi";
+
 export default function ReviewCard({
   review,
-}:any) {
+}: any) {
 
   const [
     selectedImage,
@@ -18,152 +31,356 @@ export default function ReviewCard({
   ] =
   useState("");
 
+  const [
+    helpful,
+    setHelpful
+  ] =
+  useState(false);
+
+  const customerName =
+    review.user?.fullName ||
+    "Customer";
+
+  const initials =
+    customerName
+      .split(" ")
+      .map(
+        (word:string)=>
+        word[0]
+      )
+      .join("")
+      .substring(0,2)
+      .toUpperCase();
+
   return (
 
-  <>
+    <>
 
-    {selectedImage && (
+      {selectedImage && (
 
-      <ReviewImageLightbox
+        <ReviewImageLightbox
 
-        image={selectedImage}
+          image={selectedImage}
 
-        onClose={() =>
-          setSelectedImage("")
-        }
+          onClose={() =>
+            setSelectedImage("")
+          }
 
-      />
-
-    )}
-
-    <div
-      className="
-      border
-
-      rounded-3xl
-
-      p-6
-
-      bg-white
-      dark:bg-zinc-900
-
-      shadow-sm
-      "
-    >
-
-      <div
-        className="
-        flex
-        justify-between
-        items-start
-        "
-      >
-
-        <div>
-
-          <h4
-            className="
-            font-semibold
-            text-lg
-            "
-          >
-            {
-              review.user?.fullName ||
-              "Customer"
-            }
-          </h4>
-
-          <p
-            className="
-            text-sm
-            text-zinc-500
-            mt-1
-            "
-          >
-            {new Date(
-              review.createdAt
-            ).toLocaleDateString()}
-          </p>
-
-        </div>
-
-        <StarRating
-          rating={review.rating}
         />
-
-      </div>
-
-      <p
-        className="
-        mt-4
-
-        text-zinc-700
-        dark:text-zinc-300
-
-        leading-relaxed
-        "
-      >
-        {review.comment}
-      </p>
-
-      {review.images?.length > 0 && (
-
-        <div
-          className="
-          grid
-          grid-cols-2
-          md:grid-cols-4
-
-          gap-3
-
-          mt-5
-          "
-        >
-
-          {review.images.map(
-            (
-              image:any,
-              index:number
-            ) => (
-
-              <img
-                key={index}
-                src={image.url}
-                alt=""
-
-                onClick={() =>
-                  setSelectedImage(
-                    image.url
-                  )
-                }
-
-                className="
-                h-32
-                w-full
-
-                object-cover
-
-                rounded-2xl
-
-                cursor-pointer
-
-                hover:scale-105
-
-                transition
-                "
-              />
-
-            )
-          )}
-
-        </div>
 
       )}
 
-    </div>
+      <motion.div
 
-  </>
+        whileHover={{
+          y:-6,
+        }}
 
-);
+        transition={{
+          duration:0.25,
+        }}
+
+        className="
+        border
+
+        border-zinc-200
+        dark:border-zinc-800
+
+        rounded-[32px]
+
+        p-6
+        md:p-8
+
+        bg-white
+        dark:bg-zinc-950
+
+        shadow-sm
+        hover:shadow-2xl
+
+        transition-all
+        duration-500
+        "
+      >
+
+        {/* Header */}
+
+        <div
+          className="
+          flex
+          justify-between
+          items-start
+          gap-4
+          "
+        >
+
+          <div
+            className="
+            flex
+            items-center
+            gap-4
+            "
+          >
+
+            {/* Avatar */}
+
+            <div
+              className="
+              w-14
+              h-14
+
+              rounded-full
+
+              bg-black
+              text-white
+
+              flex
+              items-center
+              justify-center
+
+              font-bold
+              "
+            >
+              {initials}
+            </div>
+
+            <div>
+
+              <h4
+                className="
+                font-bold
+                text-lg
+                "
+              >
+                {customerName}
+              </h4>
+
+              <div
+                className="
+                flex
+                items-center
+                gap-2
+
+                mt-1
+                "
+              >
+
+                {review.verifiedPurchase && (
+
+                  <>
+
+                    <CheckCircle2
+                      size={16}
+                      className="
+                      text-green-500
+                      "
+                    />
+
+                    <span
+                      className="
+                      text-sm
+                      text-zinc-500
+                      "
+                    >
+                      Verified Purchase
+                    </span>
+
+                  </>
+
+                )}
+
+              </div>
+
+              <p
+                className="
+                text-xs
+                text-zinc-400
+
+                mt-1
+                "
+              >
+                {new Date(
+                  review.createdAt
+                ).toLocaleDateString()}
+              </p>
+
+            </div>
+
+          </div>
+
+          <StarRating
+            rating={review.rating}
+          />
+
+        </div>
+
+        {/* Review Text */}
+
+        <p
+          className="
+          mt-6
+
+          text-zinc-700
+          dark:text-zinc-300
+
+          leading-relaxed
+
+          text-base
+          "
+        >
+          {review.comment}
+        </p>
+
+        {/* Images */}
+
+        {review.images?.length > 0 && (
+
+          <div
+            className="
+            grid
+
+            grid-cols-2
+            md:grid-cols-4
+
+            gap-4
+
+            mt-6
+            "
+          >
+
+            {review.images.map(
+              (
+                image:any,
+                index:number
+              ) => (
+
+                <motion.img
+
+                  whileHover={{
+                    scale:1.05,
+                  }}
+
+                  key={index}
+
+                  src={image.url}
+
+                  alt=""
+
+                  onClick={() =>
+                    setSelectedImage(
+                      image.url
+                    )
+                  }
+
+                  className="
+                  h-36
+                  w-full
+
+                  object-cover
+
+                  rounded-2xl
+
+                  cursor-pointer
+
+                  shadow-md
+                  "
+                />
+
+              )
+            )}
+
+          </div>
+
+        )}
+
+        {/* Footer */}
+
+        <div
+          className="
+          flex
+          items-center
+          justify-between
+
+          mt-6
+
+          pt-5
+
+          border-t
+          "
+        >
+
+          <div
+            className="
+            text-sm
+            text-zinc-500
+            "
+          >
+            Product Purchased & Reviewed
+          </div>
+
+          <button
+
+            onClick={async()=>{
+
+              if(helpful){
+                return;
+              }
+
+              try{
+
+                await markReviewHelpful(
+                  review._id
+                );
+
+                review.helpfulVotes =
+                (review.helpfulVotes || 0) + 1;
+
+                setHelpful(true);
+
+              }
+              catch(error){
+
+                console.error(error);
+
+              }
+
+            }}
+
+            className={`
+            flex
+            items-center
+            gap-2
+
+            px-4
+            py-2
+
+            rounded-full
+
+            transition-all
+
+            ${
+              helpful
+              ? "bg-black text-white"
+              : "border"
+            }
+            `}
+          >
+
+            <ThumbsUp size={16} />
+
+            Helpful (
+              {
+                review.helpfulVotes || 0
+              }
+            )
+
+          </button>
+
+        </div>
+
+      </motion.div>
+
+    </>
+
+  );
 
 }

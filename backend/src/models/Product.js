@@ -37,6 +37,28 @@ const productSchema =
         required: true,
       },
 
+      brand: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+
+      gender: {
+        type: String,
+        enum: ["Men", "Women", "Unisex"],
+        default: "Unisex",
+      },
+
+      material: {
+        type: String,
+        default: "",
+      },
+
+      occasion: {
+        type: String,
+        default: "",
+      },
+
       sizes: [String],
 
       colors: [String],

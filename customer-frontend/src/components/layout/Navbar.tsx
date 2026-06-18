@@ -1,6 +1,8 @@
 import {
   Link,
+  NavLink,
 } from "react-router-dom";
+
 import { useState } from "react";
 
 import MobileMenu
@@ -10,7 +12,6 @@ import {
   Menu,
   ShoppingBag,
   Heart,
-  User,
   Search,
   Moon,
 } from "lucide-react";
@@ -25,10 +26,17 @@ import {
   useSelector,
 } from "react-redux";
 
-import useTheme from "../../hooks/useTheme";
+import {
+  motion,
+} from "framer-motion";
+
+import useTheme
+from "../../hooks/useTheme";
+
 import {
   useWishlist,
 } from "../../providers/WishlistProvider";
+
 import {
   useCart,
 } from "../../providers/CartProvider";
@@ -38,24 +46,27 @@ from "../search/SearchModal";
 
 export default function Navbar() {
 
-    const { handleToggleTheme } = useTheme();
+  const {
+    handleToggleTheme,
+  } = useTheme();
 
-    const [menuOpen, setMenuOpen] =
-        useState(false);
+  const [menuOpen,
+  setMenuOpen] =
+  useState(false);
 
-    const {
-      wishlistIds
-    } =
-    useWishlist();
+  const [searchOpen,
+  setSearchOpen] =
+  useState(false);
 
-    const {
-      cartItems
-    } =
-    useCart();
+  const {
+    wishlistIds,
+  } =
+  useWishlist();
 
-    const [searchOpen,
-    setSearchOpen] =
-    useState(false);
+  const {
+    cartItems,
+  } =
+  useCart();
 
   const settings =
   useSelector(
@@ -65,136 +76,254 @@ export default function Navbar() {
 
   return (
 
-    <header
-        className="
-        sticky
-        top-0
-        z-50
+    <>
 
-        backdrop-blur-xl
-
-        bg-white/70
-        dark:bg-zinc-900/70
-
-        text-black
-        dark:text-white
-
-        border-b
-        "
-    >
-
-      <div
-        className="
-        max-w-7xl
-        mx-auto
-
-        h-16
-
-        px-4
-
-        flex
-        items-center
-        justify-between
-        "
-      >
-
-        <Link to="/">
-
-            {
-                settings?.companyLogo?.url
-                ? (
-
-                <img
-                    src={
-                    settings.companyLogo.url
-                    }
-                    alt={
-                    settings.companyName
-                    }
-                    className="
-                    h-12
-                    object-contain
-                    "
-                />
-
-                )
-                : (
-
-                <span
-                    className="
-                    font-bold
-                    text-xl
-                    "
-                >
-                    {
-                    settings?.companyName
-                    }
-                </span>
-
-                )
-            }
-
-        </Link>
-
-        <nav
-          className="
-          hidden
-          md:flex
-
-          gap-8
-          "
-        >
-
-          <Link to="/">
-            Home
-          </Link>
-
-          <Link
-          to="/products">
-            Shop
-          </Link>
-
-          <Link
-          to="/categories">
-            Categories
-          </Link>
-
-          <Link
-            to="/orders"
-          >
-            Orders
-          </Link>
-
-        </nav>
-
+      {/* Announcement Bar */}
+      {/*  
         <div
           className="
-          flex
-          items-center
-          gap-4
+          bg-black
+          text-white
+
+          text-center
+
+          py-2
+
+          text-xs
+          md:text-sm
+
+          tracking-wide
+          "
+        >
+          🚚 Free Shipping On Orders Above ₹1999
+        </div>
+
+      */}
+
+        <header
+          className="
+          sticky
+          top-0
+
+          z-50
+
+          backdrop-blur-2xl
+
+          bg-white/80
+          dark:bg-black/80
+
+          border-b
+
+          border-zinc-200
+          dark:border-zinc-800
           "
         >
 
-          <Search
-            size={20}
+          <div
             className="
-            cursor-pointer
+            max-w-7xl
+            mx-auto
+
+            px-5
+
+            h-24 md:h-32
+
+            flex
+            items-center
+            justify-between
             "
-            onClick={() =>
-              setSearchOpen(true)
-            }
-          />
+          >
+
+     
+
+          {/* Logo */}
 
           <Link
-              to="/wishlist"
+            to="/"
+            className="
+            flex
+            items-center
+            "
+          >
+
+            {settings?.companyLogo?.url ? (
+
+              <img
+                src={
+                  settings.companyLogo.url
+                }
+                alt={
+                  settings.companyName
+                }
+                className="
+                h-16
+                md:h-28
+                lg:h-32
+                object-contain
+                "
+              />
+
+            ) : (
+
+              <span
+                className="
+                text-2xl
+                font-black
+
+                tracking-tight
+                "
+              >
+                {settings?.companyName}
+              </span>
+
+            )}
+
+          </Link>
+
+          {/* Desktop Nav */}
+
+          <nav
+            className="
+            hidden
+            lg:flex
+
+            items-center
+
+            gap-10
+            "
+          >
+
+            {[
+              {
+                label:"Home",
+                path:"/"
+              },
+              {
+                label:"Shop",
+                path:"/products"
+              },
+              {
+                label:"Categories",
+                path:"/categories"
+              },
+              {
+                label:"Orders",
+                path:"/orders"
+              },
+            ].map((item)=>(
+
+              <NavLink
+
+                key={item.path}
+
+                to={item.path}
+
+                className={({isActive})=>
+                `
+                relative
+
+                text-sm
+                font-medium
+
+                transition
+
+                ${
+                  isActive
+                  ? "text-black dark:text-white"
+                  : "text-zinc-500 hover:text-black dark:hover:text-white"
+                }
+                `
+                }
+              >
+
+                {item.label}
+
+              </NavLink>
+
+            ))}
+
+          </nav>
+
+          {/* Actions */}
+
+          <div
+            className="
+            flex
+            items-center
+
+            gap-3
+            "
+          >
+
+            {/* Search */}
+
+            <motion.button
+
+              whileHover={{
+                scale:1.08
+              }}
+
+              whileTap={{
+                scale:0.95
+              }}
+
+              onClick={() =>
+                setSearchOpen(true)
+              }
+
               className="
-              relative
+              h-11
+              w-11
+
+              rounded-full
+
+              bg-zinc-100
+              dark:bg-zinc-900
+
+              flex
+              items-center
+              justify-center
               "
             >
 
-              <Heart
-                size={20}
-              />
+              <Search size={18} />
+
+            </motion.button>
+
+            {/* Wishlist */}
+
+            <Link
+              to="/wishlist"
+              className="
+              relative
+              hidden md:block
+              "
+            >
+
+              <motion.div
+
+                whileHover={{
+                  scale:1.08
+                }}
+
+                className="
+                h-11
+                w-11
+
+                rounded-full
+
+                bg-zinc-100
+                dark:bg-zinc-900
+
+                flex
+                items-center
+                justify-center
+                "
+              >
+
+                <Heart size={18} />
+
+              </motion.div>
 
               {wishlistIds.length > 0 && (
 
@@ -202,45 +331,68 @@ export default function Navbar() {
                   className="
                   absolute
 
-                  -top-2
-                  -right-2
+                  -top-1
+                  -right-1
 
-                  min-w-[18px]
-                  h-[18px]
-
-                  px-1
-
-                  text-[10px]
-
-                  bg-red-500
-                  text-white
+                  h-5
+                  min-w-[20px]
 
                   rounded-full
+
+                  bg-red-500
+
+                  text-white
+
+                  text-[10px]
 
                   flex
                   items-center
                   justify-center
                   "
                 >
-                  {
-                    wishlistIds.length
-                  }
+                  {wishlistIds.length}
                 </span>
 
               )}
 
             </Link>
 
-                      <Link
+            {/* Cart */}
+
+            <Link
               to="/cart"
               className="
               relative
+              hidden md:block
               "
             >
 
-              <ShoppingBag
-                size={20}
-              />
+              <motion.div
+
+                whileHover={{
+                  scale:1.08
+                }}
+
+                className="
+                h-11
+                w-11
+
+                rounded-full
+
+                bg-zinc-100
+                dark:bg-zinc-900
+
+                flex
+                items-center
+                justify-center
+                "
+              >
+
+                <ShoppingBag
+                  size={18}
+                />
+
+              </motion.div>
 
               {cartItems.length > 0 && (
 
@@ -248,95 +400,167 @@ export default function Navbar() {
                   className="
                   absolute
 
-                  -top-2
-                  -right-2
+                  -top-1
+                  -right-1
 
-                  min-w-[18px]
-                  h-[18px]
-
-                  px-1
-
-                  text-[10px]
-
-                  bg-black
-                  text-white
+                  h-5
+                  min-w-[20px]
 
                   rounded-full
+
+                  bg-black
+
+                  text-white
+
+                  text-[10px]
 
                   flex
                   items-center
                   justify-center
                   "
                 >
-                  {
-                    cartItems.length
-                  }
+                  {cartItems.length}
                 </span>
 
               )}
 
             </Link>
 
-          <SignedOut>
+            {/* Theme */}
 
-            <Link
-              to="/auth"
+            <button
+
+              onClick={
+                handleToggleTheme
+              }
+
+              className="
+              hidden md:flex
+
+              h-11
+              w-11
+
+              rounded-full
+
+              bg-zinc-100
+              dark:bg-zinc-900
+
+              flex
+              items-center
+              justify-center
+              "
             >
-              <User size={20}/>
-            </Link>
 
-          </SignedOut>
+              <Moon size={18} />
 
-          <SignedIn>
+            </button>
 
-            <Link
-              to="/profile"
-            >
-              Profile
-            </Link>
+            {/* Auth */}
 
-            <UserButton
-              afterSignOutUrl="/"
-            />
+            <SignedOut>
 
-          </SignedIn>
+              <Link
+                to="/auth"
+                className="
+                hidden
+                md:flex
 
-          <Moon
-            size={20}
-            className="cursor-pointer"
-            onClick={handleToggleTheme}
-          />
+                px-5
+                py-2.5
 
-          <Menu
-            size={22}
-            className="
-            md:hidden
-            cursor-pointer
-            "
-            onClick={() =>
+                rounded-full
+
+                bg-black
+
+                text-white
+
+                text-sm
+                font-medium
+                "
+              >
+                Sign In
+              </Link>
+
+            </SignedOut>
+
+            <SignedIn>
+
+              <Link
+                to="/profile"
+                className="
+                hidden
+                md:flex
+
+                px-5
+                py-2.5
+
+                rounded-full
+
+                border
+
+                text-sm
+                font-medium
+                "
+              >
+                Profile
+              </Link>
+
+              <UserButton
+                afterSignOutUrl="/"
+              />
+
+            </SignedIn>
+
+            {/* Mobile Menu */}
+
+            <button
+
+              onClick={() =>
                 setMenuOpen(true)
-            }
-          />
+              }
+
+              className="
+              lg:hidden
+
+              h-11
+              w-11
+
+              rounded-full
+
+              bg-zinc-100
+              dark:bg-zinc-900
+
+              flex
+              items-center
+              justify-center
+              "
+            >
+
+              <Menu size={20} />
+
+            </button>
+
+          </div>
 
         </div>
 
-      </div>
+      </header>
 
       <MobileMenu
-            open={menuOpen}
-            onClose={() =>
-                setMenuOpen(false)
-            }
-        />
+        open={menuOpen}
+        onClose={() =>
+          setMenuOpen(false)
+        }
+      />
 
-        <SearchModal
-          open={searchOpen}
-          onClose={() =>
-            setSearchOpen(false)
-          }
-        />
+      <SearchModal
+        open={searchOpen}
+        onClose={() =>
+          setSearchOpen(false)
+        }
+      />
 
-    </header>
+    </>
 
   );
 

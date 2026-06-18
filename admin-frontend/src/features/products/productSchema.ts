@@ -11,6 +11,14 @@ export const productSchema = z.object({
 
   category: z.string().min(1),
 
+  brand: z.string().min(1),
+
+  gender: z.string().min(1),
+
+  material: z.string().optional(),
+
+  occasion: z.string().optional(),
+
   stock: z.coerce.number().min(0),
 });
 

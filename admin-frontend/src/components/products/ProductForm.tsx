@@ -276,6 +276,93 @@ export default function ProductForm({
         )}
       </div>
 
+      <div>
+        <input
+          placeholder="Brand (Nike, Puma, Adidas)"
+          {...register("brand")}
+          className="
+          border
+          p-3
+          w-full
+          rounded
+          "
+        />
+
+        {errors.brand && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.brand.message}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <select
+          {...register("gender")}
+          className="
+          border
+          p-3
+          w-full
+          rounded
+          "
+        >
+
+          <option value="">
+            Select Gender
+          </option>
+
+          <option value="Men">
+            Men
+          </option>
+
+          <option value="Women">
+            Women
+          </option>
+
+          <option value="Unisex">
+            Unisex
+          </option>
+
+        </select>
+
+        {errors.gender && (
+          <p className="text-red-500 text-sm mt-1">
+            {errors.gender.message}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <input
+          placeholder="
+          Material
+          (Leather, Mesh, Knit)
+          "
+          {...register("material")}
+          className="
+          border
+          p-3
+          w-full
+          rounded
+          "
+        />
+      </div>
+
+      <div>
+        <input
+          placeholder="
+          Occasion
+          (Running, Casual, Sports)
+          "
+          {...register("occasion")}
+          className="
+          border
+          p-3
+          w-full
+          rounded
+          "
+        />
+      </div>
+
       {/* Stock */}
 
       <div>

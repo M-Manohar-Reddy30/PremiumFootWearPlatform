@@ -25,12 +25,17 @@ export default function CategoriesPage() {
     useState("");
 
   const [form, setForm] =
-    useState({
-      name: "",
-      description: "",
-      image: "",
-      isActive: true,
-    });
+  useState({
+    name: "",
+    description: "",
+
+    image: {
+      url: "",
+      publicId: "",
+    },
+
+    isActive: true,
+  });
 
     const [search, setSearch] =
       useState("");
@@ -83,11 +88,16 @@ async () => {
     setEditingId("");
 
     setForm({
-      name: "",
-      description: "",
-      image: "",
-      isActive: true,
-    });
+    name: "",
+    description: "",
+
+    image: {
+      url: "",
+      publicId: "",
+    },
+
+    isActive: true,
+  });
 
   };
 
@@ -155,7 +165,10 @@ async () => {
         description:
           category.description || "",
         image:
-          category.image || "",
+        category.image?.url || {
+          url:"",
+          publicId:""
+        },
         isActive:
           category.isActive,
       });
@@ -211,7 +224,12 @@ await uploadImage(file);
 
 setForm((prev)=>({
   ...prev,
-  image: res.imageUrl
+
+  image: {
+    url: res.imageUrl,
+    publicId: res.publicId,
+  }
+
 }));
 
 }
@@ -334,10 +352,10 @@ const paginatedCategories =
 
         </div>
 
-        {form.image && (
+        {form.image?.url && (
 
           <img
-            src={form.image}
+            src={form.image.url}
             alt=""
             className="
             w-32
@@ -544,10 +562,10 @@ const paginatedCategories =
 
         <td className="p-4">
 
-          {category.image ? (
+          {category.image?.url ? (
 
             <img
-              src={category.image}
+              src={category.image.url}
               alt=""
               className="
               w-16

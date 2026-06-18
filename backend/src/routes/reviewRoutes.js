@@ -23,7 +23,8 @@ const {
 createReview,
 getProductReviews,
 deleteReview,
-getAllReviews
+getAllReviews,
+markHelpful,
 }
 =
 require(
@@ -57,6 +58,11 @@ router.delete(
 "/:id",
 adminProtect,
 deleteReview
+);
+
+router.post(
+"/:id/helpful",
+markHelpful
 );
 
 module.exports =

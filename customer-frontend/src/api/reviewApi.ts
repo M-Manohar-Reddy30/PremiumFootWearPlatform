@@ -26,3 +26,9 @@ export const createReview =
     }
 
   );
+
+export const markReviewHelpful =
+(id:string)=>
+  authenticatedApi.post(
+    `/reviews/${id}/helpful`
+  );

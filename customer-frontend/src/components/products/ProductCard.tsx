@@ -305,7 +305,8 @@ export default function ProductCard({
 
         <div
           className="
-          p-5
+          p-4
+          md:p-5
           "
         >
 
@@ -322,29 +323,46 @@ export default function ProductCard({
             "
           >
 
-            <Star
-              size={14}
-              fill="currentColor"
-              className="text-yellow-500"
-            />
-
-            <span
+           <div
               className="
-              text-sm
-              font-medium
+              flex
+              items-center
+              gap-1
               "
             >
-              4.8
-            </span>
 
-            <span
-              className="
-              text-xs
-              text-zinc-500
-              "
-            >
-              (124)
-            </span>
+              <Star
+                size={14}
+                fill="currentColor"
+                className="text-yellow-500"
+              />
+
+              <span
+                className="
+                text-sm
+                font-semibold
+                "
+              >
+                {
+                  product.averageRating?.toFixed(1) ||
+                  "0.0"
+                }
+              </span>
+
+              <span
+                className="
+                text-xs
+                text-zinc-500
+                "
+              >
+                (
+                {
+                  product.reviewCount || 0
+                }
+                )
+              </span>
+
+            </div>
 
           </div>
 
@@ -352,7 +370,8 @@ export default function ProductCard({
 
           <h3
             className="
-            text-lg
+            text-base
+            md:text-lg
 
             font-bold
 
@@ -393,7 +412,8 @@ export default function ProductCard({
 
             <span
               className="
-              text-2xl
+              text-xl
+              md:text-2xl
 
               font-black
               "

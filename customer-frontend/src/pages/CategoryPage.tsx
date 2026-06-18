@@ -18,6 +18,7 @@ from "../components/products/ProductFilters";
 
 import {
   getCategoryProducts,
+  getFilterOptions,
 } from "../api/categoryApi";
 
 import ProductCard
@@ -51,6 +52,22 @@ export default function CategoryPage() {
   setSelectedColor] =
   useState("");
 
+  const [selectedBrand,
+  setSelectedBrand] =
+  useState("");
+
+  const [selectedGender,
+  setSelectedGender] =
+  useState("");
+
+  const [selectedMaterial,
+  setSelectedMaterial] =
+  useState("");
+
+  const [selectedOccasion,
+  setSelectedOccasion] =
+  useState("");
+
   const [minPrice,
   setMinPrice] =
   useState("");
@@ -58,6 +75,24 @@ export default function CategoryPage() {
   const [maxPrice,
   setMaxPrice] =
   useState("");
+
+  const [brands,setBrands] =
+  useState<string[]>([]);
+
+  const [genders,setGenders] =
+  useState<string[]>([]);
+
+  const [materials,setMaterials] =
+  useState<string[]>([]);
+
+  const [occasions,setOccasions] =
+  useState<string[]>([]);
+
+  const [sizes,setSizes] =
+  useState<string[]>([]);
+
+  const [colors,setColors] =
+  useState<string[]>([]);
 
   useEffect(()=>{
 
@@ -97,6 +132,49 @@ export default function CategoryPage() {
 
     loadData();
 
+    const loadFilters =
+    async()=>{
+
+      try{
+
+        const res =
+        await getFilterOptions();
+
+        setBrands(
+          res.data.brands || []
+        );
+
+        setGenders(
+          res.data.genders || []
+        );
+
+        setMaterials(
+          res.data.materials || []
+        );
+
+        setOccasions(
+          res.data.occasions || []
+        );
+
+        setSizes(
+          res.data.sizes || []
+        );
+
+        setColors(
+          res.data.colors || []
+        );
+
+      }
+      catch(error){
+
+        console.error(error);
+
+      }
+
+    };
+
+    loadFilters();
+
   },[slug]);
 
   const filteredProducts =
@@ -128,6 +206,34 @@ export default function CategoryPage() {
       selectedColor
     );
 
+    const matchesBrand =
+
+    !selectedBrand ||
+
+    product.brand ===
+    selectedBrand;
+
+    const matchesGender =
+
+    !selectedGender ||
+
+    product.gender ===
+    selectedGender;
+
+    const matchesMaterial =
+
+    !selectedMaterial ||
+
+    product.material ===
+    selectedMaterial;
+
+    const matchesOccasion =
+
+    !selectedOccasion ||
+
+    product.occasion ===
+    selectedOccasion;
+
     const price =
 
     product.discountPrice ||
@@ -152,6 +258,10 @@ export default function CategoryPage() {
       matchesSearch &&
       matchesSize &&
       matchesColor &&
+      matchesBrand &&
+      matchesGender &&
+      matchesMaterial &&
+      matchesOccasion &&
       matchesMin &&
       matchesMax
 
@@ -236,7 +346,7 @@ export default function CategoryPage() {
             duration: 8
           }}
 
-          src={category?.image}
+          src={category?.image?.url}
 
           alt={category?.name}
 
@@ -355,7 +465,7 @@ export default function CategoryPage() {
               "
             >
 
-              Premium Collection
+             Luxury Footwear 2026
 
             </motion.span>
 
@@ -508,46 +618,66 @@ export default function CategoryPage() {
       {/* Products Section */}
 
       <section
-        className="
-        max-w-7xl
-        mx-auto
-
-        px-6
-        py-12
-        "
-      >
-
-        <ProductFilters
-
-          search={search}
-          setSearch={setSearch}
-
-          minPrice={minPrice}
-          setMinPrice={setMinPrice}
-
-          maxPrice={maxPrice}
-          setMaxPrice={setMaxPrice}
-
-          selectedSize={selectedSize}
-          setSelectedSize={setSelectedSize}
-
-          selectedColor={selectedColor}
-          setSelectedColor={setSelectedColor}
-
-          sort={sort}
-          setSort={setSort}
-
-        />
-
-        <div
           className="
-          flex
-          justify-between
-          items-center
+          max-w-7xl
+          mx-auto
 
-          mb-10
+          px-6
+          py-12
           "
         >
+
+          <ProductFilters
+
+            search={search}
+            setSearch={setSearch}
+
+            minPrice={minPrice}
+            setMinPrice={setMinPrice}
+
+            maxPrice={maxPrice}
+            setMaxPrice={setMaxPrice}
+
+            selectedSize={selectedSize}
+            setSelectedSize={setSelectedSize}
+
+            selectedColor={selectedColor}
+            setSelectedColor={setSelectedColor}
+
+            selectedBrand={selectedBrand}
+            setSelectedBrand={setSelectedBrand}
+
+            selectedGender={selectedGender}
+            setSelectedGender={setSelectedGender}
+
+            selectedMaterial={selectedMaterial}
+            setSelectedMaterial={setSelectedMaterial}
+
+            selectedOccasion={selectedOccasion}
+            setSelectedOccasion={setSelectedOccasion}
+
+            brands={brands}
+            genders={genders}
+            materials={materials}
+            occasions={occasions}
+
+            sizes={sizes}
+            colors={colors}
+
+            sort={sort}
+            setSort={setSort}
+
+          />
+
+          <div
+            className="
+            flex
+            justify-between
+            items-center
+
+            mb-10
+            "
+          >
 
           <h2
             className="
@@ -611,7 +741,7 @@ export default function CategoryPage() {
         )}
 
       </section>
-
+  
     </MainLayout>
 
   );

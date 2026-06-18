@@ -3,6 +3,15 @@ import {
   useState,
 } from "react";
 
+import {
+  motion,
+} from "framer-motion";
+
+import {
+  History,
+  ArrowRight,
+} from "lucide-react";
+
 import ProductCard
 from "./ProductCard";
 
@@ -10,12 +19,12 @@ import useRecentlyViewed
 from "../../hooks/useRecentlyViewed";
 
 interface Props {
-  currentProductId: string;
+  currentProductId:string;
 }
 
 export default function RecentlyViewed({
   currentProductId,
-}: Props) {
+}:Props){
 
   const {
     getProducts,
@@ -26,26 +35,27 @@ export default function RecentlyViewed({
   setProducts] =
   useState<any[]>([]);
 
-  useEffect(() => {
+  useEffect(()=>{
 
     const viewedProducts =
+
     getProducts().filter(
-      (product:any) =>
+      (product:any)=>
         product._id !==
         currentProductId
     );
 
     setProducts(
-      viewedProducts
+      viewedProducts.slice(0,4)
     );
 
-  }, [
+  },[
     currentProductId
   ]);
 
-  if (
+  if(
     products.length === 0
-  ) {
+  ){
     return null;
   }
 
@@ -53,62 +63,199 @@ export default function RecentlyViewed({
 
     <section
       className="
-      mt-24
+      relative
+
+      mt-28
       "
     >
 
+      {/* Glow */}
+
       <div
         className="
-        flex
-        items-center
-        justify-between
+        absolute
 
-        mb-8
+        top-0
+        right-0
+
+        w-[700px]
+        h-[700px]
+
+        bg-zinc-300/20
+        dark:bg-zinc-700/10
+
+        blur-[120px]
+
+        pointer-events-none
+        "
+      />
+
+      {/* Header */}
+
+      <motion.div
+
+        initial={{
+          opacity:0,
+          y:30,
+        }}
+
+        whileInView={{
+          opacity:1,
+          y:0,
+        }}
+
+        viewport={{
+          once:true,
+        }}
+
+        transition={{
+          duration:0.5,
+        }}
+
+        className="
+        flex
+
+        flex-col
+        md:flex-row
+
+        md:items-end
+        md:justify-between
+
+        gap-4
+
+        mb-10
         "
       >
 
-        <h2
-          className="
-          text-3xl
-          font-bold
-          "
-        >
-          Recently Viewed
-        </h2>
+        <div>
 
-        <span
+          <div
+            className="
+            inline-flex
+
+            items-center
+            gap-2
+
+            px-4
+            py-2
+
+            rounded-full
+
+            bg-zinc-100
+            dark:bg-zinc-900
+
+            text-sm
+
+            mb-4
+            "
+          >
+
+            <History size={16} />
+
+            Continue Exploring
+
+          </div>
+
+          <h2
+            className="
+            text-3xl
+            md:text-5xl
+
+            font-black
+
+            tracking-tight
+            "
+          >
+           Continue Shopping
+          </h2>
+
+          <p
+            className="
+            mt-3
+
+            text-zinc-500
+
+            max-w-xl
+            "
+          >
+           Your recently explored styles, ready whenever you are.
+          </p>
+
+        </div>
+
+        <div
           className="
-          text-sm
+          flex
+          items-center
+          gap-2
+
           text-zinc-500
           "
         >
-          {products.length}
-          {" "}
-          Products
-        </span>
 
-      </div>
+          <span>
+            {products.length}
+            {" "}
+            Products
+          </span>
+
+          <ArrowRight
+            size={18}
+          />
+
+        </div>
+
+      </motion.div>
+
+      {/* Products */}
 
       <div
         className="
         grid
 
-        md:grid-cols-2
+        grid-cols-2
         lg:grid-cols-4
 
         gap-6
+        lg:gap-8
         "
       >
 
         {products.map(
-          (product:any) => (
+          (
+            product:any,
+            index:number
+          )=>(
 
-            <ProductCard
-              key={
-                product._id
-              }
-              product={product}
-            />
+            <motion.div
+
+              key={product._id}
+
+              initial={{
+                opacity:0,
+                y:40,
+              }}
+
+              whileInView={{
+                opacity:1,
+                y:0,
+              }}
+
+              viewport={{
+                once:true,
+              }}
+
+              transition={{
+                delay:index * 0.08,
+                duration:0.5,
+              }}
+            >
+
+              <ProductCard
+                product={product}
+              />
+
+            </motion.div>
 
           )
         )}

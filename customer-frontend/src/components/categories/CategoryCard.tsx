@@ -10,11 +10,13 @@ export default function CategoryCard({
     <motion.div
 
       whileHover={{
-        y: -10,
+        y: -12,
+        scale: 1.02,
       }}
 
       transition={{
-        duration: 0.3,
+        duration: 0.4,
+        ease: "easeOut",
       }}
 
       className="
@@ -40,7 +42,7 @@ export default function CategoryCard({
         {/* Background Image */}
 
         <img
-          src={category.image}
+          src={category.image?.url}
           alt={category.name}
           className="
           absolute
@@ -58,6 +60,37 @@ export default function CategoryCard({
           "
         />
 
+        {/* PREMIUM LABEL */}
+
+        <div
+          className="
+          absolute
+          top-6
+          left-6
+
+          z-20
+
+          px-4
+          py-2
+
+          rounded-full
+
+          bg-white/10
+
+          backdrop-blur-md
+
+          border
+          border-white/20
+
+          text-white
+
+          text-xs
+          font-semibold
+          "
+        >
+          PREMIUM CATEGORY
+        </div>
+
         {/* Premium Overlay */}
 
         <div
@@ -72,6 +105,8 @@ export default function CategoryCard({
           to-transparent
           "
         />
+
+   
 
         {/* Glow Effect */}
 
@@ -127,7 +162,17 @@ export default function CategoryCard({
             mb-3
             "
           >
-            Premium Collection
+           Luxury Footwear 2026
+          </p>
+
+          <p
+            className="
+            text-white/60
+            text-sm
+            mb-4
+            "
+          >
+            {category.productCount || 0} Products
           </p>
 
           <h3
@@ -166,11 +211,26 @@ export default function CategoryCard({
 
             gap-2
 
+            px-5
+            py-3
+
+            rounded-full
+
+            bg-white/10
+
+            backdrop-blur-md
+
+            border
+            border-white/20
+
             text-white
 
             font-semibold
 
             transition-all
+
+            group-hover:bg-white
+            group-hover:text-black
 
             group-hover:gap-4
             "

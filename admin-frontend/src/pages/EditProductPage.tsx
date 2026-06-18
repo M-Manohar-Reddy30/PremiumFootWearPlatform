@@ -204,6 +204,74 @@ export default function EditProductPage() {
           placeholder="Discount Price"
         />
 
+        <input
+          type="text"
+          name="brand"
+          value={product.brand || ""}
+          onChange={handleChange}
+          className="
+          border
+          p-3
+          w-full
+          "
+          placeholder="Brand"
+        />
+
+        <select
+          name="gender"
+          value={product.gender || ""}
+          onChange={handleChange}
+          className="
+          border
+          p-3
+          w-full
+          "
+        >
+
+          <option value="">
+            Select Gender
+          </option>
+
+          <option value="Men">
+            Men
+          </option>
+
+          <option value="Women">
+            Women
+          </option>
+
+          <option value="Unisex">
+            Unisex
+          </option>
+
+        </select>
+
+        <input
+          type="text"
+          name="material"
+          value={product.material || ""}
+          onChange={handleChange}
+          className="
+          border
+          p-3
+          w-full
+          "
+          placeholder="Material"
+        />
+
+        <input
+          type="text"
+          name="occasion"
+          value={product.occasion || ""}
+          onChange={handleChange}
+          className="
+          border
+          p-3
+          w-full
+          "
+          placeholder="Occasion"
+        />
+
         {/* Category */}
 
         <select

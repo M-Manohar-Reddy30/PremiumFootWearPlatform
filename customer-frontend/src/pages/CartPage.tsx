@@ -99,7 +99,8 @@ export default function CartPage() {
 
           <h1
             className="
-            text-4xl
+            text-3xl
+            md:text-4xl
             font-bold
             "
           >
@@ -139,8 +140,8 @@ export default function CartPage() {
 
         <h1
           className="
-          text-4xl
-          font-bold
+          text-3xl
+          md:text-4xl
 
           mb-10
           "
@@ -186,6 +187,8 @@ export default function CartPage() {
 
                     className="
                     flex
+                    flex-col
+                    sm:flex-row
 
                     gap-4
 
@@ -206,8 +209,11 @@ export default function CartPage() {
                         product.name
                       }
                       className="
-                      w-28
-                      h-28
+                      w-full
+                      sm:w-28
+
+                      h-56
+                      sm:h-28
 
                       object-cover
 
@@ -329,7 +335,8 @@ export default function CartPage() {
 
                     <div
                       className="
-                      text-right
+                      text-left
+                      sm:text-right
                       "
                     >
 
