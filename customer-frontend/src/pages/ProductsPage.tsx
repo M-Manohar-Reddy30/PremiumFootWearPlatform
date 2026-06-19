@@ -7,7 +7,8 @@ import MainLayout
 from "../layouts/MainLayout";
 
 import {
-  Filter
+  Filter,
+  X
 } from "lucide-react";
 
 import ProductCard
@@ -96,6 +97,9 @@ export default function ProductsPage() {
   const [totalPages, setTotalPages] =
     useState(1);
 
+  const [totalProducts, setTotalProducts] =
+    useState(0);
+
   const [minPrice, setMinPrice] =
     useState("");
 
@@ -152,12 +156,18 @@ export default function ProductsPage() {
 
           });
 
+          console.log(res.data);
+
         setProducts(
           res.data.products || []
         );
 
         setTotalPages(
           res.data.pagination?.pages || 1
+        );
+
+        setTotalProducts(
+          res.data.pagination?.total || 0
         );
 
       } catch (error) {
@@ -244,17 +254,6 @@ export default function ProductsPage() {
 
 }, []);
 
-  useEffect(() => {
-
-  console.log(
-    "Quick View Product:",
-    quickViewProduct
-  );
-
-}, [quickViewProduct]);
-
-  console.log(quickViewProduct);
-
   return (
 
     <MainLayout>
@@ -265,8 +264,8 @@ export default function ProductsPage() {
         className="
         relative
         overflow-hidden
-        py-4
-        md:py-32
+        py-3
+        md:py-20
         "
       >
 
@@ -295,8 +294,8 @@ export default function ProductsPage() {
           className="
           max-w-7xl
           mx-auto
-
-          px-6
+          px-4
+          md:px-6
 
           relative
           z-10
@@ -317,7 +316,7 @@ export default function ProductsPage() {
             bg-zinc-100
             dark:bg-zinc-900
 
-            text-sm
+            text-xs
 
             mb-6
             "
@@ -367,8 +366,15 @@ export default function ProductsPage() {
         className="
         max-w-7xl
         mx-auto
-        px-6
-        py-12
+
+        px-4
+        md:px-6
+
+        py-6
+        md:py-12
+
+        pb-24
+        md:pb-12
         "
       >
 
@@ -384,7 +390,8 @@ export default function ProductsPage() {
 
           gap-4
 
-          mb-10
+          mb-6
+          md:mb-10
           "
         >
 
@@ -392,10 +399,10 @@ export default function ProductsPage() {
 
             <h2
               className="
-              text-3xl
+              text-xl
               md:text-5xl
 
-              font-black
+              font-bold
               "
             >
               All Products
@@ -414,11 +421,12 @@ export default function ProductsPage() {
 
           <div
             className="
-            text-sm
+            text-xs
+            md:text-sm
             text-zinc-500
             "
           >
-            {products.length} Products Found
+            {totalProducts} Products Found
           </div>
 
           {sort && (
@@ -452,7 +460,13 @@ export default function ProductsPage() {
           flex
           gap-3
 
-          mb-8
+          mb-4
+          sticky
+          top-24
+          z-20
+          bg-white
+          dark:bg-zinc-950
+          py-2
           "
         >
 
@@ -476,6 +490,7 @@ export default function ProductsPage() {
             border
 
             bg-white
+            dark:bg-zinc-950
 
             font-medium
             "
@@ -524,6 +539,38 @@ export default function ProductsPage() {
             </option>
 
           </select>
+
+        </div>
+
+        {/* Mobile Search */}
+
+        <div
+          className="
+          md:hidden
+
+          mb-4
+          "
+        >
+
+          <input
+            type="text"
+            placeholder="Search products..."
+            value={search}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+            className="
+            w-full
+
+            h-12
+
+            px-4
+
+            rounded-2xl
+
+            border
+            "
+          />
 
         </div>
 
@@ -995,25 +1042,25 @@ export default function ProductsPage() {
         >
 
           {selectedCategory && (
-            <div className="px-4 py-2 rounded-full bg-black text-white text-sm">
+            <div className="px-3 py-1.5 rounded-full bg-black text-white text-xs">
               Category
             </div>
           )}
 
           {selectedSize && (
-            <div className="px-4 py-2 rounded-full bg-black text-white text-sm">
+            <div className="px-3 py-1.5 rounded-full bg-black text-white text-xs">
               Size {selectedSize}
             </div>
           )}
 
           {selectedColor && (
-            <div className="px-4 py-2 rounded-full bg-black text-white text-sm">
+            <div className="px-3 py-1.5 rounded-full bg-black text-white text-xs">
               {selectedColor}
             </div>
           )}
 
           {minPrice && (
-            <div className="px-4 py-2 rounded-full bg-black text-white text-sm">
+            <div className="px-3 py-1.5 rounded-full bg-black text-white text-xs">
               ₹{minPrice}+
             </div>
           )}
@@ -1030,10 +1077,12 @@ export default function ProductsPage() {
             className="
             grid
 
-            grid-cols-2
-            md:grid-cols-3
-            xl:grid-cols-4
-            gap-6
+           grid-cols-2
+           md:grid-cols-3
+           xl:grid-cols-4
+
+           gap-3
+           md:gap-6
             "
           >
 
@@ -1083,9 +1132,11 @@ export default function ProductsPage() {
               className="
               grid
               grid-cols-2
+              sm:grid-cols-2
               md:grid-cols-3
               xl:grid-cols-4
-              gap-4
+
+              gap-3
               md:gap-6
               "
             >
@@ -1117,7 +1168,8 @@ export default function ProductsPage() {
 
               gap-3
 
-              mt-16
+              mt-8
+              md:mt-16
               "
             >
 
@@ -1125,9 +1177,13 @@ export default function ProductsPage() {
                 disabled={page === 1}
                 onClick={() => setPage(page - 1)}
                 className="
-                h-12
+                h-10
+                md:h-12
 
-                px-5
+                px-4
+                md:px-5
+
+                text-sm
 
                 rounded-2xl
 
@@ -1160,8 +1216,10 @@ export default function ProductsPage() {
                     setPage(pageNumber)
                   }
                   className={`
-                  h-12
-                  w-12
+                  h-10
+                  w-10
+                  md:h-12
+                  md:w-12
 
                   rounded-2xl
 
@@ -1187,9 +1245,13 @@ export default function ProductsPage() {
                   setPage(page + 1)
                 }
                 className="
-                h-12
+                h-10
+                md:h-12
 
-                px-5
+                px-4
+                md:px-5
+
+                text-sm
 
                 rounded-2xl
 
@@ -1238,10 +1300,11 @@ export default function ProductsPage() {
             right-0
 
             bg-white
+            dark:bg-zinc-950
 
-            rounded-t-[30px]
+            rounded-t-3xl
 
-            p-6
+            p-4
 
             max-h-[85vh]
 
@@ -1249,16 +1312,34 @@ export default function ProductsPage() {
             "
           >
 
-            <h3
+            <div
               className="
-              text-2xl
-              font-bold
+              flex
+              items-center
+              justify-between
 
               mb-6
               "
             >
-              Filters
-            </h3>
+
+              <h3
+                className="
+                text-lg
+                font-semibold
+                "
+              >
+                Filters
+              </h3>
+
+              <button
+                onClick={() =>
+                  setMobileFiltersOpen(false)
+                }
+              >
+                <X size={22}/>
+              </button>
+
+            </div>
 
             {/* Category */}
 
@@ -1273,9 +1354,13 @@ export default function ProductsPage() {
               w-full
 
               border
+              border-zinc-300
+              dark:border-zinc-700
+
+              bg-white
+              dark:bg-zinc-900
 
               rounded-xl
-
               p-3
 
               mb-4
@@ -1312,9 +1397,13 @@ export default function ProductsPage() {
               w-full
 
               border
+              border-zinc-300
+              dark:border-zinc-700
+
+              bg-white
+              dark:bg-zinc-900
 
               rounded-xl
-
               p-3
 
               mb-4
@@ -1334,9 +1423,13 @@ export default function ProductsPage() {
               w-full
 
               border
+              border-zinc-300
+              dark:border-zinc-700
+
+              bg-white
+              dark:bg-zinc-900
 
               rounded-xl
-
               p-3
 
               mb-4
@@ -1353,6 +1446,12 @@ export default function ProductsPage() {
               className="
               w-full
               border
+              border-zinc-300
+              dark:border-zinc-700
+
+              bg-white
+              dark:bg-zinc-900
+
               rounded-xl
               p-3
               mb-4
@@ -1384,6 +1483,12 @@ export default function ProductsPage() {
               className="
               w-full
               border
+              border-zinc-300
+              dark:border-zinc-700
+
+              bg-white
+              dark:bg-zinc-900
+
               rounded-xl
               p-3
               mb-4
@@ -1415,6 +1520,12 @@ export default function ProductsPage() {
               className="
               w-full
               border
+              border-zinc-300
+              dark:border-zinc-700
+
+              bg-white
+              dark:bg-zinc-900
+
               rounded-xl
               p-3
               mb-4
@@ -1446,6 +1557,12 @@ export default function ProductsPage() {
               className="
               w-full
               border
+              border-zinc-300
+              dark:border-zinc-700
+
+              bg-white
+              dark:bg-zinc-900
+
               rounded-xl
               p-3
               mb-4
@@ -1478,9 +1595,13 @@ export default function ProductsPage() {
               w-full
 
               border
+              border-zinc-300
+              dark:border-zinc-700
+
+              bg-white
+              dark:bg-zinc-900
 
               rounded-xl
-
               p-3
 
               mb-4
@@ -1517,9 +1638,13 @@ export default function ProductsPage() {
               w-full
 
               border
+              border-zinc-300
+              dark:border-zinc-700
+
+              bg-white
+              dark:bg-zinc-900
 
               rounded-xl
-
               p-3
 
               mb-6
@@ -1543,6 +1668,47 @@ export default function ProductsPage() {
               ))}
 
             </select>
+
+            <button
+
+              onClick={() => {
+
+                setSearch("");
+                setSort("");
+
+                setSelectedCategory("");
+                setSelectedBrand("");
+                setSelectedGender("");
+                setSelectedMaterial("");
+                setSelectedOccasion("");
+
+                setSelectedSize("");
+                setSelectedColor("");
+
+                setMinPrice("");
+                setMaxPrice("");
+
+                setPage(1);
+
+              }}
+
+              className="
+              w-full
+
+              mb-4
+
+              py-3
+
+              rounded-xl
+
+              bg-red-50
+              text-red-600
+              "
+            >
+
+              Reset All Filters
+
+            </button>
 
             <div
               className="
@@ -1608,7 +1774,7 @@ export default function ProductsPage() {
                 "
               >
 
-                Apply
+                Apply Filters
 
               </button>
 

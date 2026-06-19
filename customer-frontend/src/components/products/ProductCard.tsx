@@ -39,7 +39,7 @@ export default function ProductCard({
     <motion.div
 
       whileHover={{
-        y: -10,
+        y:-4
       }}
 
       transition={{
@@ -52,7 +52,7 @@ export default function ProductCard({
       bg-white
       dark:bg-zinc-900
 
-      rounded-[30px]
+      rounded-2xl
 
       overflow-hidden
 
@@ -78,7 +78,8 @@ export default function ProductCard({
           className="
           relative
 
-          aspect-square
+          aspect-[1/1]
+          md:aspect-square
 
           overflow-hidden
           "
@@ -92,8 +93,8 @@ export default function ProductCard({
               className="
               absolute
 
-              top-4
-              left-4
+              top-2
+              left-2
 
               z-20
 
@@ -101,8 +102,8 @@ export default function ProductCard({
 
               text-white
 
-              px-3
-              py-1
+              px-2
+              py-0.5
 
               rounded-full
 
@@ -123,8 +124,8 @@ export default function ProductCard({
               className="
               absolute
 
-              top-4
-              left-24
+              top-10
+              left-2
 
               z-20
 
@@ -132,12 +133,12 @@ export default function ProductCard({
 
               text-white
 
-              px-3
-              py-1
+              px-2
+              py-0.5
 
               rounded-full
 
-              text-xs
+              text-[10px]
               "
             >
               BESTSELLER
@@ -163,12 +164,12 @@ export default function ProductCard({
             className="
             absolute
 
-            top-4
-            right-4
+            top-2
+            right-2
 
             z-30
 
-            p-2
+            p-1.5
 
             rounded-full
 
@@ -184,7 +185,7 @@ export default function ProductCard({
 
             <Heart
 
-              size={18}
+              size={16}
 
               fill={
                 isWishlisted
@@ -205,20 +206,24 @@ export default function ProductCard({
           {/* Image */}
 
           <img
+            loading="lazy"
             src={
-              product.images?.[0]?.url
+              product.images?.[0]?.url ||
+              "/placeholder-shoe.png"
             }
             alt={product.name}
             className="
             w-full
             h-full
 
-            object-cover
+           object-contain
+           bg-zinc-50
+           dark:bg-zinc-800
 
             transition-transform
             duration-700
 
-            group-hover:scale-110
+            group-hover:scale-105
             "
           />
 
@@ -247,15 +252,16 @@ export default function ProductCard({
 
           <div
             className="
-            absolute
+            hidden
+            lg:block
 
+            absolute
             bottom-5
             left-1/2
 
             -translate-x-1/2
 
             opacity-0
-
             group-hover:opacity-100
 
             transition-all
@@ -305,8 +311,8 @@ export default function ProductCard({
 
         <div
           className="
-          p-4
-          md:p-5
+          p-3
+          md:p-4
           "
         >
 
@@ -319,7 +325,7 @@ export default function ProductCard({
 
             gap-1
 
-            mb-3
+            mb-2
             "
           >
 
@@ -332,14 +338,14 @@ export default function ProductCard({
             >
 
               <Star
-                size={14}
+                size={12}
                 fill="currentColor"
                 className="text-yellow-500"
               />
 
               <span
                 className="
-                text-sm
+                text-xs
                 font-semibold
                 "
               >
@@ -370,14 +376,15 @@ export default function ProductCard({
 
           <h3
             className="
-            text-base
-            md:text-lg
+            text-sm
+            md:text-base
 
-            font-bold
+            font-semibold
 
             mb-2
 
-            line-clamp-1
+            line-clamp-2
+            min-h-[40px]
             "
           >
             {product.name}
@@ -387,8 +394,10 @@ export default function ProductCard({
 
           <p
             className="
-            text-sm
+            hidden
+            md:block
 
+            text-sm
             text-zinc-500
 
             line-clamp-2
@@ -405,15 +414,15 @@ export default function ProductCard({
             className="
             flex
             items-center
-
-            gap-3
+            flex-wrap
+            gap-2
             "
           >
 
             <span
               className="
-              text-xl
-              md:text-2xl
+              text-lg
+              md:text-xl
 
               font-black
               "
@@ -429,8 +438,8 @@ export default function ProductCard({
 
               <span
                 className="
+                text-xs
                 text-zinc-400
-
                 line-through
                 "
               >
@@ -440,6 +449,26 @@ export default function ProductCard({
 
             )}
 
+          </div>
+
+          <div
+            className="
+            mt-1
+            text-xs
+            font-medium
+            "
+          >
+            {product.stock > 0
+            ? (
+              <span className="text-green-600">
+                In Stock
+              </span>
+            )
+            : (
+              <span className="text-red-500">
+                Out of Stock
+              </span>
+            )}
           </div>
 
         </div>

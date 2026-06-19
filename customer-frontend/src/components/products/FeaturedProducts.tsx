@@ -42,8 +42,8 @@ export default function FeaturedProducts() {
     <section
       ref={sectionRef}
       className="
-      py-24
-      md:py-32
+      py-10
+      md:py-16
 
       relative
       overflow-hidden
@@ -93,19 +93,21 @@ export default function FeaturedProducts() {
         <div
           className="
           flex
-          flex-col
-          lg:flex-row
+          flex-row
+          items-end
+          justify-between
 
           lg:items-end
           lg:justify-between
 
           gap-6
 
-          mb-14
+          mb-8
+          md:mb-12
           "
         >
 
-          <div>
+          <div className="flex-1">
 
             <span
               className="
@@ -143,8 +145,9 @@ export default function FeaturedProducts() {
               }}
 
               className="
-              text-4xl
-              md:text-6xl
+              text-2xl
+              sm:text-3xl
+              md:text-5xl
 
               font-black
 
@@ -153,7 +156,7 @@ export default function FeaturedProducts() {
             >
               Featured
               <br />
-              Collection
+              Featured Collection
             </motion.h2>
 
             <p
@@ -212,13 +215,12 @@ export default function FeaturedProducts() {
           className="
           grid
 
-          grid-cols-1
-          sm:grid-cols-2
+          grid-cols-2
           md:grid-cols-3
           xl:grid-cols-4
 
-          gap-5
-          md:gap-8
+          gap-3
+          md:gap-6
           "
         >
 
