@@ -1,4 +1,7 @@
-import { useState } from "react";
+import {
+  useState,
+  useEffect,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
@@ -39,6 +42,30 @@ export default function QuickViewModal({
   const [selectedImage,
   setSelectedImage] =
     useState(0);
+
+  useEffect(() => {
+
+    if(open){
+
+      document.body.style.overflow =
+      "hidden";
+
+    }
+    else{
+
+      document.body.style.overflow =
+      "auto";
+
+    }
+
+    return () => {
+
+      document.body.style.overflow =
+      "auto";
+
+    };
+
+  }, [open]);
 
   if (!open || !product)
     return null;
@@ -92,10 +119,14 @@ export default function QuickViewModal({
         backdrop-blur-lg
 
         flex
-        items-center
+
+        items-end
+        md:items-center
+
         justify-center
 
-        p-4
+        p-0
+        md:p-4
         "
       >
 
@@ -132,12 +163,14 @@ export default function QuickViewModal({
           w-full
           max-w-6xl
 
-          max-h-[90vh]
+          max-h-[100vh]
+          md:max-h-[90vh]
 
           overflow-y-auto
 
-          rounded-[36px]
-
+          rounded-t-3xl
+          md:rounded-[36px]
+          
           bg-white
           dark:bg-zinc-950
 
@@ -154,8 +187,11 @@ export default function QuickViewModal({
             className="
             absolute
 
-            top-5
-            right-5
+            top-3
+            right-3
+
+            md:top-5
+            md:right-5
 
             z-50
 
@@ -186,7 +222,8 @@ export default function QuickViewModal({
 
             <div
               className="
-              p-6
+              p-4
+              md:p-6
               "
             >
 
@@ -227,7 +264,9 @@ export default function QuickViewModal({
 
                 mt-4
 
-                overflow-x-auto
+               overflow-x-auto
+                scrollbar-hide
+                pb-2
                 "
               >
 
@@ -252,8 +291,11 @@ export default function QuickViewModal({
                       }
 
                       className={`
-                      w-20
-                      h-20
+                      w-14
+                      h-14
+
+                      md:w-20
+                      md:h-20
 
                       rounded-2xl
 
@@ -345,8 +387,9 @@ export default function QuickViewModal({
 
               <h2
                 className="
-                text-4xl
-
+                text-xl
+                sm:text-2xl
+                md:text-4xl
                 font-black
 
                 leading-tight
@@ -395,7 +438,8 @@ export default function QuickViewModal({
                 text-zinc-600
                 dark:text-zinc-400
 
-                leading-relaxed
+                leading-6
+                md:leading-relaxed
                 "
               >
                 {product.description}
@@ -416,7 +460,9 @@ export default function QuickViewModal({
 
                 <span
                   className="
-                  text-4xl
+                  text-xl
+                  sm:text-2xl
+                  md:text-4xl
 
                   font-black
                   "
@@ -590,10 +636,12 @@ export default function QuickViewModal({
               <div
                 className="
                 flex
+                flex-col
+                sm:flex-row
 
-                gap-4
+                gap-3
 
-                mt-10
+                mt-8
                 "
               >
 
@@ -611,8 +659,9 @@ export default function QuickViewModal({
                   className="
                   flex-1
 
-                  flex
-                  items-center
+                  items-end
+                  md:items-center
+
                   justify-center
 
                   gap-2
@@ -646,7 +695,11 @@ export default function QuickViewModal({
                   }
 
                   className="
-                  w-16
+                  w-full
+                  sm:w-16
+
+                  h-14
+                  sm:h-auto
 
                   rounded-2xl
 

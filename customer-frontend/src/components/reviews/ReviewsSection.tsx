@@ -107,8 +107,11 @@ export default function ReviewsSection({
 
     <section
       className="
-      mt-24
-      pb-20
+      mt-12
+      md:mt-24
+
+      pb-16
+      md:pb-20
       "
     >
 
@@ -118,7 +121,7 @@ export default function ReviewsSection({
 
         border
 
-        p-8
+        p-4
         md:p-12
 
         bg-white
@@ -130,7 +133,9 @@ export default function ReviewsSection({
 
         <h2
           className="
-          text-4xl
+          text-xl
+          sm:text-2xl
+          md:text-4xl
           font-black
 
           mb-10
@@ -145,7 +150,8 @@ export default function ReviewsSection({
 
           lg:grid-cols-2
 
-          gap-12
+          gap-6
+          md:gap-12
           "
         >
 
@@ -155,7 +161,8 @@ export default function ReviewsSection({
 
             <div
               className="
-              text-6xl
+              text-4xl
+              md:text-6xl
               font-black
               "
             >
@@ -299,10 +306,13 @@ export default function ReviewsSection({
 
             <h3
               className="
-              text-2xl
+              text-xl
+              md:text-2xl
+
               font-bold
 
-              mb-5
+              mb-4
+              md:mb-5
               "
             >
               Customer Photos
@@ -315,6 +325,8 @@ export default function ReviewsSection({
               gap-4
 
               overflow-x-auto
+              pb-2
+              scrollbar-hide
               "
             >
 
@@ -335,8 +347,11 @@ export default function ReviewsSection({
                     alt=""
 
                     className="
-                    w-28
-                    h-28
+                    w-20
+                    h-20
+
+                    md:w-28
+                    md:h-28
 
                     object-cover
 
@@ -365,9 +380,11 @@ export default function ReviewsSection({
 
       <div
         className="
-        mt-12
+        mt-8
+        md:mt-12
 
-        space-y-6
+        space-y-4
+        md:space-y-6
         "
       >
 

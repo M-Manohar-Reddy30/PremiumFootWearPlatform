@@ -72,7 +72,9 @@ export default function ReviewsPage() {
   bg-white
   rounded-xl
   shadow
-  overflow-x-auto
+ overflow-x-auto
+    scrollbar-hide
+    pb-2
   "
   >
 
