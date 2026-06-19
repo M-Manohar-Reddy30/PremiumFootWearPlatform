@@ -312,33 +312,6 @@ export default function HeroBanner() {
               {banner.buttonText}
             </a>
 
-            <a
-              href="/products"
-              className="
-              w-full
-              sm:w-auto
-
-              text-center
-
-              px-8
-              py-4
-
-              border
-              border-white/30
-
-              text-white
-
-              rounded-full
-
-              hover:bg-white
-              hover:text-black
-
-              transition
-              "
-            >
-              Explore Collection
-            </a>
-
           </motion.div>
 
           {/* Trust Badges */}
