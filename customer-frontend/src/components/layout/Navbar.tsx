@@ -156,7 +156,7 @@ export default function Navbar() {
                   settings.companyName
                 }
                 className="
-                h-16
+                h-17
                 md:h-28
                 lg:h-32
                 object-contain
@@ -459,6 +459,8 @@ export default function Navbar() {
 
             <SignedOut>
 
+              {/* Desktop */}
+
               <Link
                 to="/auth"
                 className="
@@ -475,6 +477,29 @@ export default function Navbar() {
                 text-white
 
                 text-sm
+                font-medium
+                "
+              >
+                Sign In
+              </Link>
+
+              {/* Mobile */}
+
+              <Link
+                to="/auth"
+                className="
+                md:hidden
+
+                px-4
+                py-2
+
+                rounded-full
+
+                bg-black
+
+                text-white
+
+                text-xs
                 font-medium
                 "
               >
