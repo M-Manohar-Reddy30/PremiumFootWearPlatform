@@ -42,7 +42,7 @@ export default function FeaturedProducts() {
     <section
       ref={sectionRef}
       className="
-      py-10
+      py-8
       md:py-16
 
       relative
@@ -54,11 +54,11 @@ export default function FeaturedProducts() {
 
       <div
         className="
-        absolute
+        hidden md:block
 
+        absolute
         top-0
         left-1/2
-
         -translate-x-1/2
 
         w-[600px]
@@ -80,7 +80,8 @@ export default function FeaturedProducts() {
         max-w-7xl
         mx-auto
 
-        px-5
+        px-4
+        sm:px-5
         md:px-6
 
         relative
@@ -93,14 +94,17 @@ export default function FeaturedProducts() {
         <div
           className="
           flex
-          flex-row
-          items-end
-          justify-between
+          flex-col
+
+          sm:flex-row
+
+          sm:items-end
+          sm:justify-between
+
+          gap-4
 
           lg:items-end
           lg:justify-between
-
-          gap-6
 
           mb-8
           md:mb-12
@@ -146,7 +150,7 @@ export default function FeaturedProducts() {
 
               className="
               text-2xl
-              sm:text-3xl
+              sm:text-4xl
               md:text-5xl
 
               font-black
@@ -163,7 +167,8 @@ export default function FeaturedProducts() {
               className="
               mt-5
 
-              max-w-2xl
+              max-w-full
+              md:max-w-2xl
 
               text-zinc-500
 
@@ -183,10 +188,16 @@ export default function FeaturedProducts() {
             className="
             group
 
-            flex
+            inline-flex
+
             items-center
 
             gap-2
+
+            self-start
+
+            text-sm
+            md:text-base
 
             font-semibold
 
@@ -219,8 +230,9 @@ export default function FeaturedProducts() {
           md:grid-cols-3
           xl:grid-cols-4
 
-          gap-3
+          gap-4
           md:gap-6
+          lg:gap-8
           "
         >
 
@@ -249,8 +261,8 @@ export default function FeaturedProducts() {
                 }}
 
                 transition={{
-                  delay:
-                  index * 0.08,
+                  duration: 0.4,
+                  delay: index * 0.05,
                 }}
 
               >

@@ -20,10 +20,12 @@ export default function ProductSection({
 
     <section
       className="
-      py-16
-      md:py-24
+      py-8
+      md:py-16
 
-      overflow-hidden
+      relative
+
+      overflow-x-hidden
       "
     >
 
@@ -32,6 +34,7 @@ export default function ProductSection({
         max-w-7xl
         mx-auto
         px-4
+        sm:px-5
         md:px-6
         "
       >
@@ -68,7 +71,8 @@ export default function ProductSection({
 
           gap-4
 
-          mb-12
+          mb-8
+          md:mb-12
           "
         >
 
@@ -102,7 +106,7 @@ export default function ProductSection({
 
             <h2
               className="
-              text-3xl
+              text-2xl
               sm:text-4xl
               md:text-6xl
 
@@ -123,7 +127,8 @@ export default function ProductSection({
 
               text-zinc-500
 
-              max-w-2xl
+              max-w-full
+              md:max-w-2xl
               "
             >
               Discover the most popular footwear loved by our customers.
@@ -133,7 +138,12 @@ export default function ProductSection({
 
           <button
             className="
-            w-fit
+            self-start
+
+            w-full
+            sm:w-fit
+
+            text-center
 
             text-sm
             md:text-base
@@ -143,8 +153,7 @@ export default function ProductSection({
             px-5
             md:px-6
 
-            py-2.5
-            md:py-3
+            py-3
 
             rounded-full
 
@@ -183,12 +192,12 @@ export default function ProductSection({
           className="
             grid
 
-            grid-cols-1
-            sm:grid-cols-2
+            grid-cols-2
             lg:grid-cols-4
 
-            gap-5
-            md:gap-8
+            gap-4
+            md:gap-6
+            lg:gap-8
             "
           >
 
@@ -217,7 +226,7 @@ export default function ProductSection({
                 }}
 
                 transition={{
-                  delay: index * 0.08,
+                  delay: index * 0.05,
                   duration: 0.5,
                 }}
               >

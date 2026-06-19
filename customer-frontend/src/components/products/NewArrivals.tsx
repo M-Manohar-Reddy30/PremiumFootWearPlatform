@@ -24,7 +24,12 @@ export default function NewArrivals() {
 
     <section
       className="
-      py-28
+      py-10
+      md:py-20
+
+      relative
+
+      overflow-x-hidden
 
       bg-gradient-to-b
       from-zinc-100
@@ -41,6 +46,7 @@ export default function NewArrivals() {
         mx-auto
 
         px-4
+        sm:px-5
         md:px-6
         "
       >
@@ -70,7 +76,8 @@ export default function NewArrivals() {
           className="
           text-center
 
-          mb-16
+          mb-8
+          md:mb-16
           "
         >
 
@@ -78,8 +85,11 @@ export default function NewArrivals() {
             className="
             inline-block
 
-            px-4
-            py-2
+            px-3
+            md:px-4
+
+            py-1.5
+            md:py-2
 
             rounded-full
 
@@ -97,7 +107,8 @@ export default function NewArrivals() {
 
           <h2
             className="
-            text-5xl
+            text-3xl
+            sm:text-4xl
             md:text-7xl
 
             font-black
@@ -114,7 +125,8 @@ export default function NewArrivals() {
 
             text-zinc-500
 
-            max-w-2xl
+            max-w-full
+            md:max-w-2xl
             mx-auto
             "
           >
@@ -151,9 +163,11 @@ export default function NewArrivals() {
 
           overflow-hidden
 
-          rounded-[40px]
+          rounded-[24px]
+          md:rounded-[40px]
 
-          mb-12
+          mb-8
+          md:mb-12
 
           bg-black
           text-white
@@ -164,13 +178,16 @@ export default function NewArrivals() {
             className="
             grid
 
+            grid-cols-1
+
             lg:grid-cols-2
             "
           >
 
             <div
               className="
-              p-10
+              p-5
+              sm:p-6
               md:p-16
 
               flex
@@ -185,7 +202,8 @@ export default function NewArrivals() {
 
                 uppercase
 
-                tracking-[5px]
+                tracking-[3px]
+                md:tracking-[5px]
 
                 text-sm
                 "
@@ -195,7 +213,8 @@ export default function NewArrivals() {
 
               <h3
                 className="
-                text-4xl
+                text-2xl
+                sm:text-3xl
                 md:text-6xl
 
                 font-black
@@ -212,7 +231,8 @@ export default function NewArrivals() {
 
                 text-zinc-300
 
-                max-w-xl
+                max-w-full
+                md:max-w-xl
                 "
               >
                 {heroProduct.description}
@@ -222,7 +242,9 @@ export default function NewArrivals() {
                 className="
                 mt-8
 
-                text-4xl
+                text-2xl
+                sm:text-3xl
+                md:text-4xl
                 font-bold
                 "
               >
@@ -250,7 +272,10 @@ export default function NewArrivals() {
                 }
                 className="
                 w-full
-                h-full
+
+                h-[250px]
+                sm:h-[320px]
+                lg:h-full
 
                 object-cover
 
@@ -273,11 +298,12 @@ export default function NewArrivals() {
           className="
           grid
 
-          grid-cols-1
-          sm:grid-cols-2
+          grid-cols-2
           lg:grid-cols-4
 
-          gap-6
+          gap-4
+          md:gap-6
+          lg:gap-8
           "
         >
 
@@ -306,7 +332,8 @@ export default function NewArrivals() {
                 }}
 
                 transition={{
-                  delay: index * 0.1,
+                  delay: index * 0.05,
+                  duration: 0.4
                 }}
               >
 
