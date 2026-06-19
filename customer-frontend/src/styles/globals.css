@@ -38,3 +38,16 @@ html.dark #root {
   color: white;
   min-height: 100vh;
 }
+
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
