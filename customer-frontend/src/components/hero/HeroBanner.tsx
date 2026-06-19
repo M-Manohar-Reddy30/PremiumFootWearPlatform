@@ -143,7 +143,8 @@ export default function HeroBanner() {
         max-w-7xl
         mx-auto
 
-        px-6
+        px-4
+        md:px-6
 
         min-h-[420px]
         md:min-h-[650px]
@@ -182,7 +183,8 @@ export default function HeroBanner() {
 
             uppercase
 
-            tracking-[8px]
+            tracking-[3px]
+            md:tracking-[8px]
 
             text-sm
 

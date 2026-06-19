@@ -92,7 +92,8 @@ export default function RelatedProducts({
       className="
       relative
 
-      mt-28
+       mt-16
+      md:mt-28
       "
     >
 
@@ -189,8 +190,8 @@ export default function RelatedProducts({
 
           <h2
             className="
-            text-3xl
-            md:text-5xl
+           text-2xl
+           md:text-5xl
             font-black
             tracking-tight
             "
@@ -232,9 +233,8 @@ export default function RelatedProducts({
           className="
           grid
 
-          grid-cols-1
-          sm:grid-cols-2
-          md:grid-cols-4
+          grid-cols-2
+          lg:grid-cols-4
 
           gap-6
           "
@@ -270,11 +270,11 @@ export default function RelatedProducts({
           className="
           grid
 
-          grid-cols-1
-          sm:grid-cols-2
+          grid-cols-2
           lg:grid-cols-4
 
-          gap-6
+          gap-4
+          md:gap-6
           lg:gap-8
           "
         >

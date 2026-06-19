@@ -88,7 +88,7 @@ export default function ReviewCard({
 
         rounded-[32px]
 
-        p-6
+        p-4
         md:p-8
 
         bg-white
@@ -109,7 +109,8 @@ export default function ReviewCard({
           flex
           justify-between
           items-start
-          gap-4
+          gap-2
+          md:gap-4
           "
         >
 
@@ -125,8 +126,11 @@ export default function ReviewCard({
 
             <div
               className="
-              w-14
-              h-14
+              w-10
+              h-10
+
+              md:w-14
+              md:h-14
 
               rounded-full
 
@@ -148,7 +152,8 @@ export default function ReviewCard({
               <h4
                 className="
                 font-bold
-                text-lg
+                text-base
+                md:text-lg
                 "
               >
                 {customerName}
@@ -272,7 +277,8 @@ export default function ReviewCard({
                   }
 
                   className="
-                  h-36
+                  h-24
+                  md:h-36
                   w-full
 
                   object-cover
@@ -297,8 +303,13 @@ export default function ReviewCard({
         <div
           className="
           flex
-          items-center
-          justify-between
+          flex-col
+          sm:flex-row
+
+          gap-3
+
+          sm:items-center
+          sm:justify-between
 
           mt-6
 

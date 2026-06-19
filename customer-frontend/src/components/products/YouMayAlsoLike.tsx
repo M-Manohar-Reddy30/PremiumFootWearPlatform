@@ -78,7 +78,8 @@ export default function YouMayAlsoLike({
       className="
       relative
 
-      mt-32
+      mt-16
+      md:mt-32
       "
     >
 
@@ -175,7 +176,7 @@ export default function YouMayAlsoLike({
 
           <h2
             className="
-            text-4xl
+           text-2xl
             md:text-5xl
 
             font-black
@@ -230,11 +231,11 @@ export default function YouMayAlsoLike({
         className="
         grid
 
-        grid-cols-1
-        sm:grid-cols-2
+        grid-cols-2
         lg:grid-cols-4
 
-        gap-6
+        gap-4
+        md:gap-6
         lg:gap-8
         "
       >

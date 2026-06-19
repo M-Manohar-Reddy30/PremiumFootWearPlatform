@@ -65,7 +65,8 @@ export default function RecentlyViewed({
       className="
       relative
 
-      mt-28
+      mt-16
+      md:mt-28
       "
     >
 
@@ -158,9 +159,9 @@ export default function RecentlyViewed({
 
           <h2
             className="
-            text-3xl
+            text-2xl
             md:text-5xl
-
+            
             font-black
 
             tracking-tight
@@ -216,7 +217,8 @@ export default function RecentlyViewed({
         grid-cols-2
         lg:grid-cols-4
 
-        gap-6
+        gap-4
+        md:gap-6
         lg:gap-8
         "
       >

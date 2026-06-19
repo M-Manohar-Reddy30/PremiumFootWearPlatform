@@ -36,7 +36,8 @@ export default function CategoriesShowcase() {
       className="
       relative
 
-      py-28
+      py-14
+      md:py-28
 
       overflow-hidden
       "
@@ -69,7 +70,8 @@ export default function CategoriesShowcase() {
         max-w-7xl
         mx-auto
 
-        px-6
+        px-4
+        md:px-6
 
         relative
         z-10
@@ -123,7 +125,7 @@ export default function CategoriesShowcase() {
 
           <h2
             className="
-            text-5xl
+           text-3xl
             md:text-6xl
 
             font-black
@@ -142,7 +144,8 @@ export default function CategoriesShowcase() {
 
             text-zinc-500
 
-            text-lg
+            text-sm
+            md:text-lg
             "
           >
             Discover premium footwear
@@ -159,10 +162,12 @@ export default function CategoriesShowcase() {
           className="
           grid
 
+         grid-cols-2
           md:grid-cols-2
           xl:grid-cols-3
 
-          gap-8
+          gap-4
+          md:gap-8
           "
         >
 
