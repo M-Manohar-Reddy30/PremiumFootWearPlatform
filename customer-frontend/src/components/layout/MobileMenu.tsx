@@ -5,6 +5,7 @@ import {
 
 import {
   Link,
+  NavLink,
 } from "react-router-dom";
 
 import {
@@ -139,7 +140,8 @@ export default function MobileMenu({
             top-0
             right-0
 
-            w-[90%]
+            w-[85%]
+            sm:w-[420px]
             max-w-[420px]
 
             h-screen
@@ -227,6 +229,7 @@ export default function MobileMenu({
               py-6
 
               overflow-y-auto
+              overscroll-contain
               "
             >
 
@@ -247,28 +250,25 @@ export default function MobileMenu({
 
                     return (
 
-                      <Link
-
+                      <NavLink
                         key={item.path}
-
                         to={item.path}
-
                         onClick={onClose}
 
-                        className="
+                        className={({ isActive }) => `
                         flex
                         items-center
                         justify-between
-
                         p-4
-
                         rounded-2xl
-
-                        hover:bg-zinc-100
-                        dark:hover:bg-zinc-900
-
                         transition-all
-                        "
+
+                        ${
+                          isActive
+                            ? "bg-black text-white"
+                            : "hover:bg-zinc-100 dark:hover:bg-zinc-900"
+                         }
+                        `}
                       >
 
                         <div
@@ -326,7 +326,7 @@ export default function MobileMenu({
                           size={18}
                         />
 
-                      </Link>
+                      </NavLink>
 
                     );
 
@@ -389,6 +389,7 @@ export default function MobileMenu({
             <div
               className="
               p-5
+              pb-safe
 
               border-t
               border-zinc-200

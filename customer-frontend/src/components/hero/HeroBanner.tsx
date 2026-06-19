@@ -472,7 +472,7 @@ export default function HeroBanner() {
             alt={banner.title}
 
            className="
-            max-h-[260px]
+            max-h-[220px]
             sm:max-h-[320px]
             md:max-h-[500px]
             lg:max-h-[760px]

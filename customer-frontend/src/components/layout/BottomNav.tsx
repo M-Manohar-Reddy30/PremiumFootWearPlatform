@@ -63,6 +63,8 @@ export default function BottomNav() {
       left-0
       right-0
 
+      pb-safe
+
       md:hidden
 
       bg-white
@@ -82,7 +84,7 @@ export default function BottomNav() {
         grid
         grid-cols-5
 
-        h-16
+        h-[68px]
         "
       >
 
@@ -113,7 +115,7 @@ export default function BottomNav() {
 
               ${
                 isActive
-                ? "text-black dark:text-white"
+                ? "text-black dark:text-white scale-105"
                 : "text-zinc-500"
               }
               `
@@ -135,8 +137,8 @@ export default function BottomNav() {
                     -top-2
                     -right-3
 
-                    min-w-[18px]
-                    h-[18px]
+                    min-w-[20px]
+                    h-[20px]
 
                     bg-black
                     text-white

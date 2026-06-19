@@ -61,17 +61,19 @@ export default function CheckoutPage(){
 
       <div
         className="
-        max-w-5xl
+        max-w-6xl
         mx-auto
 
-        px-6
+        px-4
+        md:px-6
         py-12
         "
       >
 
         <h1
           className="
-          text-4xl
+          text-3xl
+          md:text-4xl
           font-bold
           mb-10
           "
@@ -94,42 +96,73 @@ export default function CheckoutPage(){
               return(
 
                 <div
-                  key={
-                    product._id
-                  }
-
+                  key={product._id}
                   className="
-                  border
+                  flex
+                  gap-4
 
-                  rounded-xl
+                  border
+                  rounded-2xl
 
                   p-4
                   "
                 >
 
-                  <h3>
-                    {
-                      product.name
+                  <img
+                    src={
+                      product.images?.[0]?.url
                     }
-                  </h3>
+                    alt={product.name}
+                    className="
+                    w-16
+                    h-16
 
-                  <p>
-                    Size:
-                    {" "}
-                    {item.size}
-                  </p>
+                    sm:w-20
+                    sm:h-20
 
-                  <p>
-                    Color:
-                    {" "}
-                    {item.color}
-                  </p>
+                    object-cover
 
-                  <p>
-                    Qty:
-                    {" "}
-                    {item.quantity}
-                  </p>
+                    rounded-xl
+                    "
+                  />
+
+                  <div className="flex-1">
+
+                    <h3
+                      className="
+                      font-semibold
+                      "
+                    >
+                      {product.name}
+                    </h3>
+
+                    <p className="text-zinc-500">
+                      Size: {item.size}
+                    </p>
+
+                    <p className="text-zinc-500">
+                      Color: {item.color}
+                    </p>
+
+                    <p className="text-zinc-500">
+                      Qty: {item.quantity}
+                    </p>
+
+                    <p
+                      className="
+                      mt-2
+                      font-bold
+                      "
+                    >
+                      ₹
+                      {
+                        (product.discountPrice ||
+                        product.price) *
+                        item.quantity
+                      }
+                    </p>
+
+                  </div>
 
                 </div>
 
@@ -142,11 +175,14 @@ export default function CheckoutPage(){
 
         <div
           className="
-          mt-8
+          mt-10
 
-          border-t
+          bg-zinc-50
+          dark:bg-zinc-900
 
-          pt-6
+          rounded-3xl
+
+          p-6
           "
         >
 
@@ -176,8 +212,12 @@ export default function CheckoutPage(){
             bg-green-600
             text-white
 
-            px-8
+            w-full
+
             py-4
+
+            font-semibold
+            text-lg
 
             rounded-xl
             "

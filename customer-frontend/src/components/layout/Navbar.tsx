@@ -126,7 +126,7 @@ export default function Navbar() {
 
             px-5
 
-            h-14 md:h-20 lg:h-24
+            h-16 md:h-20 lg:h-24
 
             flex
             items-center
@@ -156,7 +156,8 @@ export default function Navbar() {
                   settings.companyName
                 }
                 className="
-                h-9
+                h-8
+                sm:h-9
                 md:h-16
                 lg:h-20
                 object-contain
@@ -251,7 +252,8 @@ export default function Navbar() {
             flex
             items-center
 
-            gap-3
+            gap-2
+            md:gap-3
             "
           >
 
@@ -272,8 +274,11 @@ export default function Navbar() {
               }
 
               className="
-              h-11
-              w-11
+              h-10
+              w-10
+
+              md:h-11
+              md:w-11
 
               rounded-full
 
@@ -307,8 +312,11 @@ export default function Navbar() {
                 }}
 
                 className="
-                h-11
-                w-11
+                h-10
+                w-10
+
+                md:h-11
+                md:w-11
 
                 rounded-full
 
@@ -374,8 +382,11 @@ export default function Navbar() {
                 }}
 
                 className="
-                h-11
-                w-11
+                h-10
+                w-10
+
+                md:h-11
+                md:w-11
 
                 rounded-full
 
@@ -437,8 +448,11 @@ export default function Navbar() {
               className="
               hidden md:flex
 
-              h-11
-              w-11
+              h-10
+              w-10
+
+              md:h-11
+              md:w-11
 
               rounded-full
 
@@ -547,8 +561,11 @@ export default function Navbar() {
               className="
               lg:hidden
 
-              h-11
-              w-11
+              h-10
+              w-10
+
+              md:h-11
+              md:w-11
 
               rounded-full
 

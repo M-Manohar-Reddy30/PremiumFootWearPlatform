@@ -28,8 +28,7 @@ export default function MainLayout({
       <main
         className="
         flex-1
-
-        pb-20
+        pb-24
         md:pb-0
         "
       >

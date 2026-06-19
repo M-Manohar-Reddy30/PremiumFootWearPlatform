@@ -192,7 +192,8 @@ export default function CartPage() {
 
                     rounded-3xl
 
-                    p-4
+                    p-3
+                    md:p-4
                     "
                   >
 
@@ -208,7 +209,7 @@ export default function CartPage() {
                       w-full
                       sm:w-28
 
-                      h-56
+                      h-40
                       sm:h-28
 
                       object-cover
@@ -287,10 +288,14 @@ export default function CartPage() {
                           className="
                           border
 
-                          px-3
-                          py-1
+                          w-10
+                          h-10
 
-                          rounded
+                          flex
+                          items-center
+                          justify-center
+
+                          rounded-lg
                           "
                         >
                           -
@@ -316,10 +321,14 @@ export default function CartPage() {
                           className="
                           border
 
-                          px-3
-                          py-1
+                          w-10
+                          h-10
 
-                          rounded
+                          flex
+                          items-center
+                          justify-center
+
+                          rounded-lg
                           "
                         >
                           +
@@ -383,7 +392,14 @@ export default function CartPage() {
 
           {/* Summary */}
 
-          <div>
+          <div
+            className="
+            lg:sticky
+            lg:top-24
+
+            h-fit
+            "
+          >
 
             <div
               className="
@@ -476,6 +492,65 @@ export default function CartPage() {
             </div>
 
           </div>
+
+        </div>
+
+      </div>
+
+      <div
+        className="
+        md:hidden
+
+        fixed
+        bottom-16
+        left-0
+        right-0
+
+        bg-white
+        dark:bg-zinc-950
+
+        border-t
+
+        p-4
+
+        z-40
+        "
+      >
+
+        <div
+          className="
+          flex
+          items-center
+          justify-between
+          "
+        >
+
+          <div>
+
+            <p className="text-xs">
+              Total
+            </p>
+
+            <p className="font-bold text-lg">
+              ₹{summary.total}
+            </p>
+
+          </div>
+
+          <button
+            onClick={handleCheckout}
+            className="
+            bg-black
+            text-white
+
+            px-6
+            py-3
+
+            rounded-xl
+            "
+          >
+            Checkout
+          </button>
 
         </div>
 
