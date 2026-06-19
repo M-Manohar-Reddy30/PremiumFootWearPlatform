@@ -293,7 +293,7 @@ export default function MobileMenu({
               </div>
 
               {/* Featured Categories */}
-
+              {/*
               <div
                 className="
                 mt-10
@@ -340,7 +340,7 @@ export default function MobileMenu({
               </div>
 
             </div>
-
+            */}
             {/* Bottom CTA */}
 
             <div
