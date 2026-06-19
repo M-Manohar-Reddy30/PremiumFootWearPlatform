@@ -10,8 +10,8 @@ export default function CategoryCard({
     <motion.div
 
       whileHover={{
-        y: -12,
-        scale: 1.02,
+        y: -8,
+        scale: 1.01,
       }}
 
       transition={{
@@ -26,9 +26,12 @@ export default function CategoryCard({
 
       overflow-hidden
 
-      rounded-[32px]
+      rounded-[20px]
+      md:rounded-[32px]
 
-      h-[420px]
+      h-[260px]
+      sm:h-[320px]
+      md:h-[420px]
 
       shadow-lg
       hover:shadow-2xl
@@ -65,13 +68,17 @@ export default function CategoryCard({
         <div
           className="
           absolute
-          top-6
-          left-6
+          top-3
+          left-3
+          md:top-6
+          md:left-6
 
           z-20
 
-          px-4
-          py-2
+          px-2
+          py-1
+          md:px-4
+          md:py-2
 
           rounded-full
 
@@ -84,7 +91,8 @@ export default function CategoryCard({
 
           text-white
 
-          text-xs
+          text-[10px]
+          md:text-xs
           font-semibold
           "
         >
@@ -143,7 +151,8 @@ export default function CategoryCard({
 
           bottom-0
 
-          p-8
+          p-4
+          md:p-8
 
           w-full
           "
@@ -153,13 +162,17 @@ export default function CategoryCard({
             className="
             uppercase
 
-            tracking-[4px]
+            tracking-[2px]
+            md:tracking-[4px]
 
-            text-xs
+            text-[10px]
+            md:text-xs
+            font-semibold
 
             text-white/70
 
-            mb-3
+            mb-1
+            md:mb-3
             "
           >
            Luxury Footwear 2026
@@ -179,11 +192,14 @@ export default function CategoryCard({
             className="
             text-white
 
-            text-4xl
+            text-xl
+            sm:text-2xl
+            md:text-4xl
 
             font-black
 
-            mb-3
+            mb-1
+            md:mb-3
             "
           >
             {category.name}
@@ -193,9 +209,10 @@ export default function CategoryCard({
             className="
             text-white/80
 
-            line-clamp-2
+            hidden md:block line-clamp-2
 
-            mb-5
+            mmb-2
+            md:mb-5
             "
           >
             {category.description ||
@@ -211,8 +228,10 @@ export default function CategoryCard({
 
             gap-2
 
-            px-5
-            py-3
+            px-3
+            py-2
+            md:px-5
+            md:py-3
 
             rounded-full
 
@@ -225,6 +244,9 @@ export default function CategoryCard({
 
             text-white
 
+            text-sm
+            md:text-base
+
             font-semibold
 
             transition-all
@@ -232,7 +254,7 @@ export default function CategoryCard({
             group-hover:bg-white
             group-hover:text-black
 
-            group-hover:gap-4
+            md:group-hover:gap-4
             "
           >
 
