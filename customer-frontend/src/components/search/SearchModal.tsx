@@ -126,6 +126,20 @@ export default function SearchModal({
 
   }, []);
 
+  useEffect(() => {
+
+    document.body.style.overflow =
+      open ? "hidden" : "auto";
+
+    return () => {
+
+      document.body.style.overflow =
+        "auto";
+
+    };
+
+  }, [open]);
+
   if (!open) {
 
     return null;
@@ -165,8 +179,9 @@ export default function SearchModal({
         flex
         justify-center
 
-        px-4
-        pt-20
+        p-0
+        md:px-4
+        md:pt-20
         "
       >
 
@@ -199,16 +214,19 @@ export default function SearchModal({
 
           className="
           w-full
+
+          h-[100dvh]
+          md:h-auto
+
           max-w-4xl
 
           bg-white
           dark:bg-zinc-950
 
-          rounded-[32px]
+          rounded-none
+          md:rounded-[32px]
 
           overflow-hidden
-
-          shadow-[0_25px_80px_rgba(0,0,0,0.4)]
           "
         >
 
@@ -216,12 +234,17 @@ export default function SearchModal({
 
           <div
             className="
+            sticky
+            top-0
+            z-20
+
             flex
             items-center
 
             gap-4
 
-            p-6
+            p-4
+            md:p-6
 
             border-b
             border-zinc-200
@@ -230,7 +253,10 @@ export default function SearchModal({
           >
 
             <Search
-              size={24}
+              size={20}
+              className="
+              flex-shrink-0
+              "
             />
 
             <input
@@ -246,8 +272,8 @@ export default function SearchModal({
               }
 
               placeholder="
-Search shoes, brands, categories...
-"
+              Search shoes, brands, categories...
+              "
 
               className="
               flex-1
@@ -256,7 +282,8 @@ Search shoes, brands, categories...
 
               outline-none
 
-              text-lg
+              text-base
+              md:text-lg
               "
             />
 
@@ -281,6 +308,9 @@ Search shoes, brands, categories...
 
             <button
               onClick={onClose}
+              className="
+              p-2
+              "
             >
               <X />
             </button>
@@ -328,8 +358,9 @@ Search shoes, brands, categories...
                       }
 
                       className="
-                      px-4
+                      px-3
                       py-2
+                      md:px-4
 
                       rounded-full
 
@@ -357,7 +388,8 @@ Search shoes, brands, categories...
 
           <div
             className="
-            max-h-[70vh]
+            max-h-[calc(100dvh-80px)]
+            md:max-h-[70vh]
             overflow-y-auto
             "
           >
@@ -381,7 +413,8 @@ Search shoes, brands, categories...
 
               <div
                 className="
-                p-12
+                p-6
+                md:p-12
                 text-center
                 "
               >
@@ -426,7 +459,8 @@ Search shoes, brands, categories...
 
                   gap-5
 
-                  p-5
+                  p-3
+                  md:p-5
 
                   hover:bg-zinc-50
                   dark:hover:bg-zinc-900
@@ -445,8 +479,11 @@ Search shoes, brands, categories...
                     alt=""
 
                     className="
-                    w-24
-                    h-24
+                    w-16
+                    h-16
+
+                    md:w-24
+                    md:h-24
 
                     rounded-2xl
 
@@ -463,7 +500,8 @@ Search shoes, brands, categories...
                     <h3
                       className="
                       font-semibold
-                      text-lg
+                      text-sm
+                      md:text-lg
                       "
                     >
                       {product.name}
