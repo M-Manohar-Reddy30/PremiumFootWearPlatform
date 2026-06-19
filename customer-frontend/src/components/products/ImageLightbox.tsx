@@ -127,8 +127,7 @@ export default function ImageLightbox({
         </button>
 
         <button
-
-          onClick={()=>
+          onClick={() =>
             setSelectedIndex(
               selectedIndex === 0
               ? images.length - 1
@@ -137,40 +136,48 @@ export default function ImageLightbox({
           }
 
           className="
+          hidden md:block
+
           absolute
 
           left-6
 
+          top-1/2
+          -transform-y-1/2
+
           text-white
+
           z-50
           "
         >
-          <ChevronLeft
-            size={40}
-          />
+          <ChevronLeft size={30} />
         </button>
 
         <img
 
-          src={
-            images[
-              selectedIndex
-            ]?.url
-          }
+            src={
+              images[
+                selectedIndex
+              ]?.url
+            }
 
-          alt=""
+            alt=""
 
-          className="
-          max-h-[90vh]
-          max-w-[90vw]
+            className="
+            w-full
+            h-auto
 
-          object-contain
-          "
-        />
+            max-w-[95vw]
+            max-h-[85vh]
+
+            object-contain
+
+            mx-auto
+            "
+          />
 
         <button
-
-          onClick={()=>
+          onClick={() =>
             setSelectedIndex(
               selectedIndex ===
               images.length - 1
@@ -180,17 +187,21 @@ export default function ImageLightbox({
           }
 
           className="
+          hidden md:block
+
           absolute
 
           right-6
 
+          top-1/2
+          -translate-y-1/2
+
           text-white
+
           z-50
           "
         >
-          <ChevronRight
-            size={40}
-          />
+          <ChevronRight size={30} />
         </button>
 
       </div>
