@@ -29,6 +29,8 @@ export default function Footer() {
 
     <footer
       className="
+      hidden md:block
+
       relative
 
       mt-24

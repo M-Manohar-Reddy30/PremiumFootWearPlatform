@@ -56,7 +56,7 @@ export default function HeroBanner() {
 
       <section
         className="
-        h-screen
+        min-h-[60vh]
         flex
         items-center
         justify-center
@@ -85,8 +85,9 @@ export default function HeroBanner() {
     <section
       className="
       relative
-      min-h-[80vh]
-      md:min-h-screen
+      min-h-[420px]
+      md:min-h-[650px]
+      lg:min-h-screen
       overflow-hidden
 
       bg-gradient-to-r
@@ -144,15 +145,17 @@ export default function HeroBanner() {
 
         px-6
 
-        min-h-[80vh]
-        md:min-h-screen
-
+        min-h-[420px]
+        md:min-h-[650px]
+        lg:min-h-screen
+        
         grid
         lg:grid-cols-2
 
         items-center
 
-        gap-12
+        gap-6
+        md:gap-12
         "
       >
 
@@ -210,10 +213,10 @@ export default function HeroBanner() {
 
             font-black
 
-            text-4xl
-            sm:text-5xl
-            md:text-7xl
-            xl:text-8xl
+            text-3xl
+            sm:text-4xl
+            md:text-6xl
+            lg:text-7xl
 
             leading-none
             "
@@ -269,9 +272,11 @@ export default function HeroBanner() {
 
             className="
             flex
-            flex-wrap
+            flex-col
 
-            gap-4
+            sm:flex-row
+
+            gap-3
 
             mt-10
             "
@@ -280,6 +285,11 @@ export default function HeroBanner() {
             <a
               href={banner.buttonLink}
               className="
+              w-full
+              sm:w-auto
+
+              text-center
+
               px-8
               py-4
 
@@ -303,6 +313,11 @@ export default function HeroBanner() {
             <a
               href="/products"
               className="
+              w-full
+              sm:w-auto
+
+              text-center
+
               px-8
               py-4
 
@@ -344,9 +359,15 @@ export default function HeroBanner() {
             flex
             flex-wrap
 
-            gap-6
+            justify-center
+            lg:justify-start
 
-            mt-10
+            gap-4
+
+            mt-8
+
+            text-xs
+            sm:text-sm
 
             text-zinc-300
             "
@@ -363,67 +384,6 @@ export default function HeroBanner() {
             <span>
               ✓ Secure Payment
             </span>
-
-            <div
-              className="
-              grid
-              grid-cols-3
-
-              gap-3
-              md:gap-8
-
-              mt-10
-
-              max-w-lg
-              "
-            >
-
-              <div>
-                <h3 className="
-                  text-2xl
-                  md:text-3xl
-                  font-black
-                  text-white
-                  "
-                >
-                  50K+
-                </h3>
-                <p className="text-zinc-400 text-sm">
-                  Customers
-                </p>
-              </div>
-
-              <div>
-                <h3 className="
-                  text-2xl
-                  md:text-3xl
-                  font-black
-                  text-white
-                  "
-                >
-                  500+
-                </h3>
-                <p className="text-zinc-400 text-sm">
-                  Products
-                </p>
-              </div>
-
-              <div>
-                <h3 className="
-                  text-2xl
-                  md:text-3xl
-                  font-black
-                  text-white
-                  "
-                >
-                  4.9★
-                </h3>
-                <p className="text-zinc-400 text-sm">
-                  Rating
-                </p>
-              </div>
-
-            </div>
 
           </motion.div>
 
@@ -448,11 +408,15 @@ export default function HeroBanner() {
           }}
 
           className="
-          hidden
-          lg:flex
+          flex
 
           justify-center
           items-center
+
+          order-last
+          lg:order-last
+
+          lg:flex
           "
         >
 
@@ -505,8 +469,14 @@ export default function HeroBanner() {
             src={banner.image.url}
             alt={banner.title}
 
-            className="
-            max-h-[760px]
+           className="
+            max-h-[260px]
+            sm:max-h-[320px]
+            md:max-h-[500px]
+            lg:max-h-[760px]
+
+            w-full
+
             object-contain
 
             drop-shadow-[0_40px_80px_rgba(0,0,0,0.6)]
@@ -516,34 +486,6 @@ export default function HeroBanner() {
         </motion.div>
 
       </div>
-
-      {/* Scroll Indicator */}
-
-      <motion.div
-
-        animate={{
-          y: [0, 12, 0]
-        }}
-
-        transition={{
-          repeat: Infinity,
-          duration: 1.5
-        }}
-
-        className="
-        absolute
-
-        bottom-8
-        left-1/2
-
-        -translate-x-1/2
-
-        text-white
-        text-2xl
-        "
-      >
-        ↓
-      </motion.div>
 
       <div
         className="

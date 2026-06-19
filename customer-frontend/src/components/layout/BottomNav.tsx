@@ -107,7 +107,7 @@ export default function BottomNav() {
               items-center
               justify-center
 
-              text-xs
+              text-[11px]
 
               relative
 
@@ -123,7 +123,7 @@ export default function BottomNav() {
 
               <div className="relative">
 
-                <Icon size={20} />
+                <Icon size={22} />
 
                 {item.path === "/cart" &&
                 cartItems.length > 0 && (

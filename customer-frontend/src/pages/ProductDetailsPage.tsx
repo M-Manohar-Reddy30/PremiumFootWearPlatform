@@ -5,6 +5,7 @@ import {
 
 import {
   useParams,
+  useNavigate,
 } from "react-router-dom";
 
 import ImageLightbox
@@ -48,6 +49,9 @@ export default function ProductDetailsPage() {
   const { slug } =
   useParams();
 
+  const navigate =
+  useNavigate();
+
   const [product,setProduct] =
   useState<any>(null);
 
@@ -56,10 +60,6 @@ export default function ProductDetailsPage() {
 
   const [selectedImage,setSelectedImage] =
   useState(0);
-
-  const [zoomStyle,
-  setZoomStyle] =
-  useState({});
 
   const {
     wishlistIds,
@@ -164,7 +164,7 @@ export default function ProductDetailsPage() {
 
     <MainLayout>
 
-      <div className="pb-24 md:pb-0">
+      <div className="pb-32 md:pb-0">
 
       <div
         className="
@@ -197,8 +197,6 @@ export default function ProductDetailsPage() {
               overflow-hidden
 
               rounded-3xl
-
-              cursor-zoom-in
               "
             >
 
@@ -249,71 +247,17 @@ export default function ProductDetailsPage() {
                   setLightboxOpen(true)
                 }
 
-                onMouseMove={(e)=>{
-
-                  const {
-                    left,
-                    top,
-                    width,
-                    height,
-                  } =
-                  e.currentTarget
-                  .getBoundingClientRect();
-
-                  const x =
-                  (
-                    (e.clientX - left)
-                    / width
-                  ) * 100;
-
-                  const y =
-                  (
-                    (e.clientY - top)
-                    / height
-                  ) * 100;
-
-                  setZoomStyle({
-
-                    transform:
-                    "scale(2)",
-
-                    transformOrigin:
-                    `${x}% ${y}%`
-
-                  });
-
-                }}
-
-                onMouseLeave={()=>{
-
-                  setZoomStyle({
-
-                    transform:
-                    "scale(1)",
-
-                    transformOrigin:
-                    "center"
-
-                  });
-
-                }}
-
-                style={zoomStyle}
-
                 className="
                 w-full
                 aspect-square
 
                 object-cover
 
-                rounded-[32px]
+                rounded-3xl
 
-                shadow-2xl
+                shadow-xl
 
-                cursor-zoom-in
-
-                transition-transform
-                duration-200
+                cursor-pointer
                 "
               />
 
@@ -327,6 +271,8 @@ export default function ProductDetailsPage() {
                 mt-4
 
                 overflow-x-auto
+                scrollbar-hide
+                pb-2
                 "
             >
 
@@ -350,30 +296,32 @@ export default function ProductDetailsPage() {
                     }
 
                     className={`
-                    w-24
-                    h-24
+                      flex-shrink-0
 
-                    md:w-28
-                    md:h-28
+                      w-20
+                      h-20
 
-                    object-cover
+                      md:w-28
+                      md:h-28
 
-                    rounded-2xl
+                      object-cover
 
-                    cursor-pointer
+                      rounded-2xl
 
-                    border-2
+                      cursor-pointer
 
-                    transition-all
-                    duration-300
+                      border-2
 
-                    hover:scale-105
+                      transition-all
+                      duration-300
 
-                    ${
-                      selectedImage === index
-                      ? "border-black shadow-lg"
-                      : "border-transparent"
-                    }
+                      hover:scale-105
+
+                      ${
+                        selectedImage === index
+                        ? "border-black shadow-lg"
+                        : "border-transparent"
+                      }
                     `}
                  />
 
@@ -995,83 +943,150 @@ export default function ProductDetailsPage() {
         }
       />
 
-      <ImageLightbox
-
-  images={
-    product.images
-  }
-
-  selectedIndex={
-    selectedImage
-  }
-
-  setSelectedIndex={
-    setSelectedImage
-  }
-
-  open={
-    lightboxOpen
-  }
-
-  onClose={() =>
-    setLightboxOpen(false)
-  }
-/>
-
     {/* Mobile Sticky Cart */}
 
-    <div
-      className="
-      fixed
-      bottom-0
-      left-0
-      right-0
-
-      z-50
-
-      bg-white
-      dark:bg-zinc-950
-
-      border-t
-
-      p-4
-
-      md:hidden
-      "
-    >
-
-      <button
-
-        onClick={() => {
-
-          addItem(
-            product._id,
-            1,
-            selectedSize,
-            selectedColor
-          );
-
-        }}
-
+      <div
         className="
-        w-full
+        fixed
+        bottom-16
 
-        bg-black
-        text-white
+        left-0
+        right-0
 
-        py-4
+        z-50
 
-        rounded-xl
+        bg-white
+        dark:bg-zinc-950
 
-        font-semibold
+        border-t
+
+        shadow-[0_-4px_20px_rgba(0,0,0,0.08)]
+
+        p-3
+
+        md:hidden
         "
       >
 
-        Add To Cart
+        <div
+          className="
+          flex
+          items-center
+          gap-3
+          "
+        >
 
-      </button>
+          <div className="flex-1">
 
-    </div>
+            <p className="text-xs text-zinc-500">
+              Price
+            </p>
+
+            <p className="font-bold text-lg">
+              ₹
+              {
+                product.discountPrice ||
+                product.price
+              }
+            </p>
+
+          </div>
+
+          <button
+
+            onClick={() => {
+
+              if (
+                product.sizes?.length > 0 &&
+                !selectedSize
+              ) {
+                alert("Please select a size");
+                return;
+              }
+
+              if (
+                product.colors?.length > 0 &&
+                !selectedColor
+              ) {
+                alert("Please select a color");
+                return;
+              }
+
+              addItem(
+                product._id,
+                1,
+                selectedSize,
+                selectedColor
+              );
+
+            }}
+
+            className="
+            flex-1
+
+            bg-black
+            text-white
+
+            py-3
+
+            rounded-xl
+
+            font-semibold
+            "
+          >
+            Cart
+          </button>
+
+          <button
+
+            onClick={() => {
+
+              if (
+                product.sizes?.length > 0 &&
+                !selectedSize
+              ) {
+                alert("Please select a size");
+                return;
+              }
+
+              if (
+                product.colors?.length > 0 &&
+                !selectedColor
+              ) {
+                alert("Please select a color");
+                return;
+              }
+
+              addItem(
+                product._id,
+                1,
+                selectedSize,
+                selectedColor
+              );
+
+              navigate("/checkout");
+
+            }}
+
+            className="
+            flex-1
+
+            bg-orange-500
+            text-white
+
+            py-3
+
+            rounded-xl
+
+            font-semibold
+            "
+          >
+            Buy Now
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 

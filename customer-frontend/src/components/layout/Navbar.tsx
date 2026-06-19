@@ -126,7 +126,7 @@ export default function Navbar() {
 
             px-5
 
-            h-16 md:h-20 lg:h-24
+            h-14 md:h-20 lg:h-24
 
             flex
             items-center
@@ -156,7 +156,7 @@ export default function Navbar() {
                   settings.companyName
                 }
                 className="
-                h-12
+                h-9
                 md:h-16
                 lg:h-20
                 object-contain

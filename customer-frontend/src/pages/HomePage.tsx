@@ -27,15 +27,15 @@ export default function HomePage() {
 
       <HeroBanner />
 
-      <FeaturedProducts />
-
       <CategoriesShowcase />
+
+      <FeaturedProducts />
 
       <TrendingProducts />
 
-      <BrandStory />
-
       <NewArrivals />
+
+      <BrandStory />
 
     </MainLayout>
 
