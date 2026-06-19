@@ -164,27 +164,29 @@ export default function ProductDetailsPage() {
 
     <MainLayout>
 
-      <div className="pb-32 md:pb-0">
+      <div className="pb-28 md:pb-0">
 
       <div
         className="
         max-w-[1600px]
         mx-auto
 
-        px-4
+        px-3
+        sm:px-4
         md:px-8
         xl:px-12
 
-        py-8
-        md:py-16
+        py-3
+        md:py-12
 
         grid
         lg:grid-cols-2
 
-        gap-10
+        gap-6
+        md:gap-10
         lg:gap-20
         "
-      >
+        >
 
         {/* Image Gallery */}
 
@@ -196,7 +198,8 @@ export default function ProductDetailsPage() {
 
               overflow-hidden
 
-              rounded-3xl
+              rounded-2xl
+              md:rounded-3xl
               "
             >
 
@@ -215,7 +218,7 @@ export default function ProductDetailsPage() {
                   bg-red-500
                   text-white
 
-                  px-4
+                  px-3
                   py-2
 
                   rounded-full
@@ -249,11 +252,17 @@ export default function ProductDetailsPage() {
 
                 className="
                 w-full
-                aspect-square
+
+                aspect-[1/1]
+
+                max-h-[380px]
+                sm:max-h-[420px]
+                md:max-h-none
 
                 object-cover
 
-                rounded-3xl
+                rounded-2xl
+                md:rounded-3xl
 
                 shadow-xl
 
@@ -298,8 +307,8 @@ export default function ProductDetailsPage() {
                     className={`
                       flex-shrink-0
 
-                      w-20
-                      h-20
+                      w-16
+                      h-16
 
                       md:w-28
                       md:h-28
@@ -334,12 +343,19 @@ export default function ProductDetailsPage() {
 
         {/* Info */}
 
-        <div>
+        <div
+          className="
+          lg:sticky
+          lg:top-28
+
+          h-fit
+          "
+        >
 
           <h1
             className="
-            text-2xl
-            sm:text-3xl
+            text-xl
+            sm:text-2xl
             md:text-4xl
 
             font-bold
@@ -364,15 +380,17 @@ export default function ProductDetailsPage() {
 
               items-center
 
-              px-4
-              py-2
+              px-2.5
+              py-1.5
 
               rounded-full
 
               bg-zinc-100
               dark:bg-zinc-800
 
-              text-sm
+              text-xs
+              md:text-sm
+
               font-medium
               "
             >
@@ -385,10 +403,11 @@ export default function ProductDetailsPage() {
               className="
               mt-5
 
-              text-base
+              text-sm
               md:text-lg
 
-              leading-8
+              leading-6
+              md:leading-8
 
               text-zinc-600
               dark:text-zinc-400
@@ -414,7 +433,7 @@ export default function ProductDetailsPage() {
 
                 <span
                 className="
-                text-3xl
+                text-2xl
                 md:text-4xl
                 font-extrabold
                 tracking-tight
@@ -454,8 +473,9 @@ export default function ProductDetailsPage() {
                 bg-green-100
                 text-green-700
 
-                px-4
+                px-3
                 py-2
+                text-sm
 
                 rounded-full
 
@@ -468,17 +488,20 @@ export default function ProductDetailsPage() {
             )}
 
             <p
-                className="
-                mt-4
+              className="
+              mt-3
 
-                text-green-600
+              text-sm
+              md:text-base
 
-                font-medium
-                "
+              text-green-600
+
+              font-medium
+              "
             >
-                In Stock:
-                {" "}
-                {product.stock}
+              In Stock:
+              {" "}
+              {product.stock}
             </p>
 
           <div
@@ -525,8 +548,14 @@ export default function ProductDetailsPage() {
 
                       className={`
                       border
+                      min-w-[48px]
+
+                      h-11
+
                       px-4
-                      py-2
+
+                      text-sm
+                      
                       rounded-xl
 
                       ${
@@ -584,8 +613,12 @@ export default function ProductDetailsPage() {
 
                       className={`
                       border
+                      min-h-[44px]
+
                       px-4
-                      py-2
+
+                      text-sm
+                      
                       rounded-xl
 
                       ${
@@ -610,20 +643,51 @@ export default function ProductDetailsPage() {
 
             <div
               className="
-              text-sm
-              text-zinc-500
+              flex
+              flex-wrap
+              gap-2
               "
             >
 
-              Size:
-              {" "}
-              {selectedSize || "-"}
+              {selectedSize && (
 
-              {" | "}
+                <span
+                  className="
+                  px-3
+                  py-1
 
-              Color:
-              {" "}
-              {selectedColor || "-"}
+                  rounded-full
+
+                  bg-black
+                  text-white
+
+                  text-xs
+                  "
+                >
+                  Size {selectedSize}
+                </span>
+
+              )}
+
+              {selectedColor && (
+
+                <span
+                  className="
+                  px-3
+                  py-1
+
+                  rounded-full
+
+                  bg-black
+                  text-white
+
+                  text-xs
+                  "
+                >
+                  {selectedColor}
+                </span>
+
+              )}
 
             </div>
 
@@ -693,10 +757,10 @@ export default function ProductDetailsPage() {
                 text-white
 
                 w-full
-                sm:w-auto
+                md:w-auto
 
-                px-6
-                md:px-10
+                px-4
+                md:px-6
 
                 py-4
 
@@ -734,10 +798,10 @@ export default function ProductDetailsPage() {
                 border-black
 
                 w-full
-                sm:w-auto
+                md:w-auto
 
-                px-6
-                md:px-10
+                px-4
+                md:px-6
 
                 py-4
 
@@ -762,6 +826,55 @@ export default function ProductDetailsPage() {
 
             </div>
 
+            <div
+              className="
+              flex
+              items-center
+
+              gap-2
+
+              mb-4
+              "
+            >
+
+              <span
+                className="
+                px-3
+                py-1
+
+                rounded-full
+
+                bg-green-100
+
+                text-green-700
+
+                text-xs
+                font-medium
+                "
+              >
+                In Stock
+              </span>
+
+              <span
+                className="
+                px-3
+                py-1
+
+                rounded-full
+
+                bg-blue-100
+
+                text-blue-700
+
+                text-xs
+                font-medium
+                "
+              >
+                Free Delivery
+              </span>
+
+            </div>
+
             <ShareProduct
               product={product}
             />
@@ -771,7 +884,8 @@ export default function ProductDetailsPage() {
               border
               rounded-2xl
 
-              p-5
+              p-4
+              md:p-5
 
               space-y-4
 
@@ -856,7 +970,8 @@ export default function ProductDetailsPage() {
         className="
         max-w-7xl
         mx-auto
-        px-6
+        px-4
+        md:px-6
         "
       >
 
@@ -878,7 +993,8 @@ export default function ProductDetailsPage() {
         className="
         max-w-7xl
         mx-auto
-        px-6
+        px-4
+        md:px-6
         "
       >
 
@@ -894,7 +1010,8 @@ export default function ProductDetailsPage() {
         className="
         max-w-7xl
         mx-auto
-        px-6
+        px-4
+        md:px-6
         "
       >
 
@@ -910,7 +1027,8 @@ export default function ProductDetailsPage() {
         className="
         max-w-7xl
         mx-auto
-        px-6
+        px-4
+        md:px-6
         "
       >
 
@@ -948,7 +1066,9 @@ export default function ProductDetailsPage() {
       <div
         className="
         fixed
-        bottom-16
+        bottom-0
+
+        pb-safe
 
         left-0
         right-0
@@ -962,7 +1082,8 @@ export default function ProductDetailsPage() {
 
         shadow-[0_-4px_20px_rgba(0,0,0,0.08)]
 
-        p-3
+        px-3
+        py-3
 
         md:hidden
         "
@@ -1069,7 +1190,7 @@ export default function ProductDetailsPage() {
             }}
 
             className="
-            flex-1
+            flex-[1.6]
 
             bg-orange-500
             text-white

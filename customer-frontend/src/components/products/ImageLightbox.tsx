@@ -143,7 +143,7 @@ export default function ImageLightbox({
           left-6
 
           top-1/2
-          -transform-y-1/2
+          -translate-y-1/2
 
           text-white
 
@@ -168,7 +168,10 @@ export default function ImageLightbox({
             h-auto
 
             max-w-[95vw]
-            max-h-[85vh]
+            md:max-w-[90vw]
+
+            max-h-[75vh]
+            md:max-h-[90vh]
 
             object-contain
 
