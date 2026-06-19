@@ -168,8 +168,10 @@ export default function ProductDetailsPage() {
 
       <div
         className="
-        max-w-[1600px]
+        max-w-7xl
         mx-auto
+
+        overflow-hidden
 
         px-3
         sm:px-4
@@ -186,7 +188,7 @@ export default function ProductDetailsPage() {
         md:gap-10
         lg:gap-20
         "
-        >
+      >
 
         {/* Image Gallery */}
 
@@ -259,7 +261,9 @@ export default function ProductDetailsPage() {
                 sm:max-h-[420px]
                 md:max-h-none
 
-                object-cover
+                object-contain
+                bg-zinc-50
+                dark:bg-zinc-900
 
                 rounded-2xl
                 md:rounded-3xl
@@ -974,7 +978,7 @@ export default function ProductDetailsPage() {
         md:px-6
         "
       >
-
+        
         <RelatedProducts
 
           categoryId={
@@ -986,7 +990,7 @@ export default function ProductDetailsPage() {
           }
 
         />
-
+        
       </div>
 
       <div
@@ -1014,13 +1018,14 @@ export default function ProductDetailsPage() {
         md:px-6
         "
       >
-
+        
         <YouMayAlsoLike
           currentProductId={
             product._id
           }
+   
         />
-
+          
       </div>
 
       <div
@@ -1073,7 +1078,7 @@ export default function ProductDetailsPage() {
         left-0
         right-0
 
-        z-50
+        z-[60]
 
         bg-white
         dark:bg-zinc-950

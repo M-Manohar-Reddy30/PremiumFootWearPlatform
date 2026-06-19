@@ -87,11 +87,11 @@ export default function YouMayAlsoLike({
 
       <div
         className="
-        absolute
+        hidden md:block
 
+        absolute
         left-1/2
         top-0
-
         -translate-x-1/2
 
         w-[600px]
