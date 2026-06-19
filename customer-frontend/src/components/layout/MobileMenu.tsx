@@ -14,9 +14,14 @@ import {
   Heart,
   User,
   Package,
+  ShoppingCart,
   X,
   ChevronRight,
 } from "lucide-react";
+
+import {
+  useCart,
+} from "../../providers/CartProvider";
 
 interface Props {
   open: boolean;
@@ -27,6 +32,10 @@ export default function MobileMenu({
   open,
   onClose,
 }: Props) {
+
+  const {
+    cartItems,
+  } = useCart();
 
   const menuItems = [
     {
@@ -45,14 +54,19 @@ export default function MobileMenu({
       icon: Grid3X3,
     },
     {
-      label: "Orders",
-      path: "/orders",
-      icon: Package,
+      label: "Cart",
+      path: "/cart",
+      icon: ShoppingCart,
     },
     {
       label: "Wishlist",
       path: "/wishlist",
       icon: Heart,
+    },
+    {
+      label: "Orders",
+      path: "/orders",
+      icon: Package,
     },
     {
       label: "Profile",
@@ -277,6 +291,35 @@ export default function MobileMenu({
                             {item.label}
                           </span>
 
+                          {item.path === "/cart" &&
+                            cartItems.length > 0 && (
+
+                            <span
+                              className="
+                              ml-1
+
+                              min-w-[22px]
+                              h-[22px]
+
+                              px-2
+
+                              rounded-full
+
+                              bg-black
+                              text-white
+
+                              text-xs
+
+                              flex
+                              items-center
+                              justify-center
+                              "
+                            >
+                              {cartItems.length}
+                            </span>
+
+                          )}
+
                         </div>
 
                         <ChevronRight
@@ -338,9 +381,9 @@ export default function MobileMenu({
                 </div>
 
               </div>
-
+              */}
             </div>
-            */}
+          
             {/* Bottom CTA */}
 
             <div
