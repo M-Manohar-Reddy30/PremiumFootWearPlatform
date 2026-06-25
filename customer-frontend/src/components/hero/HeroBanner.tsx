@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 import { fetchHomeData } from "../../features/home/homeSlice";
 
@@ -284,8 +285,8 @@ export default function HeroBanner() {
             "
           >
 
-            <a
-              href={banner.buttonLink}
+            <Link
+              to={`/${banner.buttonLink.replace(/^\/+/, "")}`}
               className="
               w-full
               sm:w-auto
@@ -310,7 +311,7 @@ export default function HeroBanner() {
               "
             >
               {banner.buttonText}
-            </a>
+            </Link>
 
           </motion.div>
 
